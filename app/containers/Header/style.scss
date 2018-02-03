@@ -1,0 +1,40 @@
+@import 'theme/variables';
+
+.Header {
+  height: $header-height;
+  background-color: $blue-1;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  &__Logo {
+    width: 190px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  &__Heading {
+    font-size: 16px;
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &__Dropdown {
+    padding-right: 20px;
+  }
+  &__Dropdown__Anchor {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    i {
+      padding-left: 5px;
+    }
+  }
+  &__MenuItem {
+    padding: 10px 5px;
+    i {
+      padding-right: 7px;
+    }
+  }
+}
