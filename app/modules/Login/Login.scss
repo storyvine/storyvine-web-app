@@ -1,0 +1,37 @@
+@import 'theme/variables';
+.Login {
+  width: 370px;
+  background-color: #fff;
+  padding: 30px 50px;
+  margin-top: -10px;
+  h1 {
+    font-size: 20px;
+    color: #292c39;
+    margin: 10px 0 20px;
+    display: block;
+  }
+  p {
+    font-size: 16px;
+    font-weight: 300;
+    color: $grey;
+  }
+  button {
+    width: 100%;
+    background-color: $greyDark;
+    border-color: $greyDark;
+    border-radius: 22px;
+  }
+  a {
+    padding-top: 10px;
+    font-size: 13px;
+  }
+
+  &__keep_signed {
+    margin-top: -10px;
+    margin-bottom: 15px;
+  }
+
+  &__forgot_pass {
+    color: $grey;
+  }
+}

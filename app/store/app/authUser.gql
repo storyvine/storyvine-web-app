@@ -1,0 +1,16 @@
+# ON_STARTUP: adjust for your query
+query authUser {
+  me {
+    id
+    email
+    roles {
+      name
+    }
+    notificationChecked
+    signinData {
+      qrCode
+      backupCodes
+      signinStep
+    }
+  }
+}

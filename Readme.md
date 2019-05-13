@@ -1,113 +1,42 @@
-# OOO Admin Boilerplate
-
-Production-ready React + Webpack architecture implemented with JWT authorization. Perceived performance and development experience are key factors in this setup. You can use this code base for learning or to scaffold your mission-critical project.
-
-## Key concepts:
-
-- [x] [Webpack 3 Tree shaking](http://moduscreate.com/webpack-2-tree-shaking-configuration/)
-- [x] [PRPL pattern](https://www.slideshare.net/grgur/prpl-pattern-with-webpack-and-react) with minimal application core
-- [x] Automatic code splitting with React Router 4 and `import()` statement
-- [x] Automatic common chunk bundling
-- [x] CSS modules
-- [x] Snapshot testing with Jest
-- [x] Flow static typing. Check out this [guide to using Flow in the project](https://github.com/ModusCreateOrg/budgeting-sample-app-webpack2/blob/master/docs/flow.md).
-- [x] Performance budgets in Webpack 3
-- [x] React 16 Error Boundaries
-
-## Performance
-
-1. **Minimal application core.** Vendor chunk is not used. Instead, it's bundled in the app core. The app core is actually very small, containing just the code needed to bootstrap the app.
-2. **Common code is a chunk.** Webpack figure out which bundles we reuse in chunks and create a common chunk that's also asyncronous. 
-3. **Redux module injection**. Each chunk contains respective views _and_ redux modules. Yes, that means reducers, action creators, actions - are all dynamically injected as we navigate through routes. That adds to the _minimal application core_ concept and PRPL pattern. 
-4. **Pre-caching**. Service Workers pre-cache resources so the browser can access them as soon as the user needs to.
-
-## Performance Budgets
-Target is 300kB for the entrypoint and 300kB for all other assets. This is how it's set up [webpack configuration]
-
-```js
-performance: {
-  maxAssetSize: 300000,
-  maxEntrypointSize: 300000,
-  hints: 'warning',
-},
-```
-
-Adding lots of extra code to the entry chunk might cause the build (`yarn run build`) process to show a warning.
-
-Note that running webpack dev server in production mode (`yarn run prod`) will trigger this warning because of the additional dev server code injected in the app. This code will not show in regular production builds.
-
-## Service Workers
-Service workers are enabled only when serving static files, not through webpack-dev-server. Here's how you can test service worker functionality:
-1. Run `yarn run build` (or `npm run build`) to build the app
-2. Run `yarn run serve` (or `npm run serve`) to serve the app on [localhost:3000](http://localhost:3000)
-3. Run a new instance of Chrome with disabled security (because localhost is not on https): 
-
-**OS X**
-
-```bash
-open -a "Google Chrome" --args --user-data-dir=/tmp/unsafe --unsafely-treat-insecure-origin-as-secure=http://localhost
-```
-
-**Linux**
-
-```bash
-/path/to/chrome --user-data-dir=/tmp/unsafe --unsafely-treat-insecure-origin-as-secure=http://localhost
-```
-
-**Windows**
-
-```bash
-chrome.exe --user-data-dir=c:\temp --unsafely-treat-insecure-origin-as-secure=http://localhost
-```
-
-4. Now you can observe network traffic in the Network tab or SW activity in Application > Service Workers in Developer Tools
-
-## Stack
-The app was built using these aweseome technologies
-
-- [x] [Webpack 3.5](https://webpack.github.io)
-- [x] [React 16.x](https://facebook.github.io/react/)
-- [x] [Redux](http://redux.js.org/)
-- [x] [Antd Design](https://ant.design/docs/react/introduce)
-- [x] [Sagas](https://github.com/redux-saga/redux-saga)
-- [x] [React Router 4](https://reacttraining.com/react-router/)
-- [x] [Reselect](https://github.com/reactjs/reselect/)
-- [x] [Babel](https://babeljs.io/)
-- [x] [Prettier](https://github.com/prettier/prettier)
-- [x] [Jest](https://facebook.github.io/jest/)
-- [x] [Flow](https://flow.org/en/)
-- [x] [Yarn](https://yarnpkg.com/en/)
-- [x] [Ducks](https://github.com/erikras/ducks-modular-redux/) 🐣
-- [x] [Sass](http://sass-lang.com/)
-- [x] [Autoprefixer](https://github.com/postcss/autoprefixer)
-
-## Yarn Scripts
-
-* `yarn` - install dependencies
-* `yarn start` - run development server
-* `yarn run prod` - run production server
-* `yarn run build` - build app for deployment
-* `yarn run serve` - serve previously built app using pushstate server
-* `yarn run lint` - lint check
-* `yarn run lint:fix` - lint check + autofixes + prettify code with __prettier__
-* `yarn run test` - run test suite
-* `yarn run test:fix` - run test suite watching files for changes
-* `yarn run flow` - run flow type checking
-* `yarn run update-types` - update flow library definitions
+# OOO-ADMIN-BOILERPLATE
 
 ## NPM Scripts
-Similar to Yarn, really...
 
-* `npm install` - install dependencies
-* `npm start` - run development server
-* `npm run prod` - run production server
-* `npm run build` - build app for deployment
-* `npm run serve` - serve previously built app using pushstate server
-* `npm run lint` - lint check
-* `npm run lint:fix` - lint check + autofixes + prettify code with __prettier__
-* `npm run test` - run test suite
-* `npm run test:fix` - run test suite watching files for changes
-* `npm run flow` - run flow type checking
-* `npm run update-types` - update flow library definitions
+- `npm install` - install dependencies
+- `npm run develop` - run development server
+- `npm run prod` - run production server
+- `npm run build` - build app for deployment
+- `npm run lint:fix` - lint check + autofixes + prettify code with **prettier**
+- `npm run test` - run test suite
+- **[More npm scripts](./docs/tools/npm.md)**
 
-## License - MIT
+## TODO on project setup:
+
+- Search for ON_STARTUP comments and address them:
+  - app/config/index.js - change bffUri
+  - app/index.js - change sentry url and uncomment it
+  - app/store/app - adjust .graphql files to your project
+  - app/theme - adjust color scheme to your project
+  - app/images - change logos and favicon
+  - app/modules/Login/containers/UserAuth - change email to contact support
+- Update [CI setup](./docs/CI.md)
+- Update Readme.md - change project name and remove "TODO on project setup" section
+- Drink a cup of coffee/tea and enjoy your life :-)
+
+## Table of Contents
+
+- [Features Documentation](./docs/features/TODO.md)
+- [Project Structure](./docs/solutions/ProjectStructure.md)
+- [Technical Decisions](./docs/solutions/TechnicalDecisions.md)
+- [Feature Checklist](./docs/solutions/FeatureChecklist.md)
+- [Writing Documentation](./docs/solutions/WritingDocumentation.md)
+
+## Additional tips
+
+- Checkout unit (components/MenuLink, utils/format) and snapshot (all components) tests examples. Set up E2E to test critical flows as it is done in [this example](https://github.com/oakslab/e2e-travis-example).
+- Components are typed using TypeScript [how to work with it](./docs/tools/typescript)
+- [Setup CI](./docs/CI.md) if you haven't done it before
+- Take some inspiration (or just move to your repo) common features like [Notifications](./examples/Notifications) or [Two Factor Auth](./examples/TwoFA)
+- [Utils](./app/utils) provide bunch of enhancements for you, use them!
+- [React Context api usage example](./app/store/sidebar) is used for local state management. You can easily change it to [Redux](https://redux.js.org/) or [Apollo-link-state](https://github.com/apollographql/apollo-link-state). These examples can give you some ideas over what will work best for you: [Context way](https://jsfiddle.net/j7vhrdmw/), [Redux way](https://jsfiddle.net/dL2hsfc8/), [Apollo-link-state way](https://jsfiddle.net/ugr6j7o0/1/).
+- Need some package updates? Check if they haven't been done to boilerplate yet, if not ask why and maybe [prepare PR](./docs/Contribution)

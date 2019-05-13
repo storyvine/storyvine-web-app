@@ -1,8 +1,0 @@
-@import 'theme/variables';
-
-.Dashboard {
-  &__MainSectionWrap {
-    display: flex;
-    height: calc(100vh - #{$header-height});
-  }
-}

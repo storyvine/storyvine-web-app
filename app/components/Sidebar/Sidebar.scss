@@ -1,0 +1,84 @@
+@import 'theme/variables';
+
+.Sidebar {
+  @media (max-width: $breakpoint-mobile) {
+    display: none;
+  }
+
+  min-width: $sidebar-width;
+  min-height: 100vh;
+  background-color: $greyDark !important;
+  padding-top: 30px;
+  border-right: 0 none;
+
+  &__show_mobile {
+    display: block !important;
+    min-width: 100vw;
+  }
+
+  &__Header {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  &__Navigation {
+    padding-top: 20px;
+    background-color: $greyDark;
+    width: calc(100% + 1px);
+
+    :global(.ant-menu-item) {
+      width: 100%;
+      margin: 0 !important;
+      background-color: $greyDark;
+      a {
+        color: #ececec;
+      }
+      &:hover,
+      &:global(.active) {
+        background-color: $dark-color-hover;
+        color: $gold;
+      }
+    }
+
+    :global(.ant-menu-submenu-title) {
+      width: 100%;
+      margin: 0;
+      font-size: 12px;
+      color: #9ca0a4;
+      background-color: $greyDark;
+      align-items: center;
+      cursor: unset;
+      i {
+        display: none;
+      }
+    }
+
+    :global(.ant-menu-submenu-title),
+    :global(.ant-menu-item) {
+      padding-left: 24px !important;
+    }
+
+    :global(.ant-menu:not(.ant-menu-horizontal)) :global(.ant-menu-item-selected) {
+      background-color: $greyBlack;
+      a {
+        color: $gold;
+      }
+      &:after {
+        display: none;
+      }
+    }
+  }
+
+  &__Logo {
+    text-align: center;
+  }
+}
+
+.BurgerButton {
+  @media (min-width: $breakpoint-mobile) {
+      display: none;
+  }
+  font-size: 35px;
+  border: none;
+  padding: unset;
+}

@@ -1,0 +1,30 @@
+@import 'theme/variables';
+
+.UserMenu {
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+
+  :global(.ant-menu-item-selected) {
+    color: $black;
+    background-color: $white !important;
+  }
+
+  &__MenuItem {
+    line-height: 22px;
+    border-radius: 2px;
+    padding: 10px 30px 10px 10px;
+
+    i {
+      padding-right: 7px;
+    }
+
+    &:hover {
+      color: white;
+      background-color: #4f515a;
+
+      i {
+        color: white;
+      }
+    }
+  }
+}

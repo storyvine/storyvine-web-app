@@ -1,0 +1,55 @@
+@import 'theme/variables';
+
+$header-height: 70px;
+$main-section-padding: 0 20px;
+
+.Header {
+  height: $header-height;
+  background-color: $white;
+  color: $white;
+  display: flex;
+  align-items: center;
+
+  &__MainSection {
+    color: black;
+    font-size: 16px;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    padding: $main-section-padding;
+    height: 100%;
+    border-bottom: $section-border;
+
+    @media (max-width: $breakpoint-mobile) {
+      padding: 0 3px;
+    }
+  }
+  &__Breadcrumbs {
+    a {
+      color: black;
+      &:last-of-type {
+        color: #c7c7c7;
+      }
+      &:hover {
+        color: $primary-color-hover;
+      }
+    }
+  }
+  &__Buttons {
+    display: flex;
+
+    > :not(:first-child) {
+      margin-left: 15px;
+    }
+  }
+}
+
+.BurgerButton {
+  @media (min-width: $breakpoint-mobile) {
+      display: none;
+  }
+  font-size: 35px;
+  border: none;
+  padding: unset;
+}

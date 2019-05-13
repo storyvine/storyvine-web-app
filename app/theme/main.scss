@@ -1,21 +1,69 @@
 @import 'theme/variables';
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,300,400,700);
+@import 'theme/fonts/fontFaces';
+
 html,
 body {
   box-sizing: border-box;
 }
 
 body {
+  font-family: 'Untitled Sans Test';
   box-sizing: border-box;
   margin: 0;
   padding: 0;
   font-size: 14px;
+  overflow-x: hidden;
 }
 
-a, a:hover, a:active, a:visited, a:focus {
+a,
+a:hover,
+a:active,
+a:visited,
+a:focus {
   text-decoration: none !important;
 }
 
-*, *:before, *:after {
+*,
+*:before,
+*:after {
   box-sizing: inherit;
+}
+
+label {
+  min-height: 14px;
+  margin-top: 30px;
+  margin-bottom: 6px;
+  color: $grey;
+  font-size: 11px;
+  line-height: 14px;
+  display: block;
+}
+
+:global(.FormHeader) {
+  margin-top: 30px;
+  color: $greyDark;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 22px;
+}
+
+:global(.error) {
+  color: $red;
+}
+
+:global(strong) {
+  margin-top: 30px;
+  font-family: 'Untitled Sans Test';
+  color: lighten($black, 10%);
+  font-size: 16px;
+  font-weight: 400;
+  display: block;
+}
+
+:global {
+  .no-scroll {
+    overflow: hidden;
+    position: relative;
+    height: 100vh;
+  }
 }

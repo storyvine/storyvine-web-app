@@ -1,0 +1,106 @@
+// ON_STARTUP: change for your fonts in the project 
+
+@font-face {
+  font-family: 'Untitled Sans Test';
+  font-style: italic;
+  font-weight: 300;
+  src:
+    local('UntitledSansTest'),
+    local('UntitledSansTest-LightItalic'),
+    url(./fonts/UntitledSansTest-LightItalic.otf) format('opentype'),
+}
+
+@font-face {
+  font-family: 'Untitled Sans Test';
+  font-style: normal;
+  font-weight: 400;
+  src:
+    local('UntitledSansTest'),
+    local('UntitledSansTest-Regular'),
+    url(./fonts/UntitledSansTest-Regular.otf) format('opentype'),
+}
+
+@font-face {
+  font-family: 'Untitled Sans Test';
+  font-style: normal;
+  font-weight: 500;
+  src:
+    local('UntitledSansTest'),
+    local('UntitledSansTest-Medium'),
+    url(./fonts/UntitledSansTest-Medium.otf) format('opentype'),
+}
+
+@font-face {
+  font-family: 'Untitled Sans Test';
+  font-style: normal;
+  font-weight: 600;
+  src:
+    local('UntitledSansTest'),
+    local('UntitledSansTest-Bold'),
+    url(./fonts/UntitledSansTest-Bold.otf) format('opentype'),
+}
+
+@font-face {
+  font-family: 'Untitled Sans Test';
+  font-style: normal;
+  font-weight: 700;
+  src:
+    local('UntitledSansTest'),
+    local('UntitledSansTest-Black'),
+    url(./fonts/UntitledSansTest-Black.otf) format('opentype'),
+}
+
+/*
+  ITALICS
+*/
+
+@font-face {
+  font-family: 'Untitled Sans Test';
+  font-style: normal;
+  font-weight: 300;
+  src:
+    local('UntitledSansTest'),
+    local('UntitledSansTest-Light'),
+    url(./fonts/UntitledSansTest-Light.otf) format('opentype'),
+}
+
+
+@font-face {
+  font-family: 'Untitled Sans Test';
+  font-style: italic;
+  font-weight: 400;
+  src:
+    local('UntitledSansTest'),
+    local('UntitledSansTest-RegularItalic'),
+    url(./fonts/UntitledSansTest-RegularItalic.otf) format('opentype'),
+}
+
+@font-face {
+  font-family: 'Untitled Sans Test';
+  font-style: italic;
+  font-weight: 500;
+  src:
+    local('UntitledSansTest'),
+    local('UntitledSansTest-MediumItalic'),
+    url(./fonts/UntitledSansTest-MediumItalic.otf) format('opentype'),
+}
+
+@font-face {
+  font-family: 'Untitled Sans Test';
+  font-style: italic;
+  font-weight: 600;
+  src:
+    local('UntitledSansTest'),
+    local('UntitledSansTest-BoldItalic'),
+    url(./fonts/UntitledSansTest-BoldItalic.otf) format('opentype'),
+}
+
+@font-face {
+  font-family: 'Untitled Sans Test';
+  font-style: italic;
+  font-weight: 700;
+  src:
+    local('UntitledSansTest'),
+    local('UntitledSansTest-BlackItalic'),
+    url(./fonts/UntitledSansTest-BlackItalic.otf) format('opentype'),
+}

@@ -1,0 +1,15 @@
+@import 'theme/variables';
+.Logo {
+  height: 64px;
+  width: 130px;
+  margin-bottom: 30px;
+}
+
+.Centered {
+  height: 100vh;
+  background-color: $greyWhite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}

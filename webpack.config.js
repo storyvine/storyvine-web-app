@@ -1,14 +1,14 @@
 const webpack = require('webpack');
 const path = require('path');
 const lessToJs = require('less-vars-to-js');
-const fs  = require('fs');
+const fs = require('fs');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 const sassThreadLoader = require('thread-loader');
+const tsImportPluginFactory = require('ts-import-plugin');
 
 sassThreadLoader.warmup({ workerParallelJobs: 20 }, [
   'sass-loader',
@@ -16,10 +16,11 @@ sassThreadLoader.warmup({ workerParallelJobs: 20 }, [
   'postcss-loader',
   'css-loader',
   'style-loader',
-  'babel-loader',
 ]);
 
-const antThemeVars = lessToJs(fs.readFileSync(path.join(__dirname, './app/theme/ant-vars.less'), 'utf8'));
+const antThemeVars = lessToJs(
+  fs.readFileSync(path.join(__dirname, './app/theme/ant-vars.less'), 'utf8')
+);
 
 // replace localhost with 0.0.0.0 if you want to access
 // your app from wifi or a virtual machine
@@ -56,22 +57,6 @@ module.exports = function(env) {
   let lessLoader;
 
   const plugins = [
-    new webpack.optimize.CommonsChunkPlugin({
-      async: true,
-      children: true,
-      minChunks: 2,
-    }),
-
-    // setting production environment will strip out
-    // some of the development code from the app
-    // and libraries
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify(nodeEnv),
-        APIARY: JSON.stringify('http://private-8cfaae-glasshouse.apiary-mock.com'),
-      },
-    }),
-
     // create index.html
     new HtmlWebpackPlugin({
       template: htmlTemplate,
@@ -91,37 +76,13 @@ module.exports = function(env) {
         minifyURLs: true,
       },
     }),
-
-    // make sure script tags are async to avoid blocking html render
-    new ScriptExtHtmlWebpackPlugin({
-      defaultAttribute: 'async',
-      sync: /^libs.dll.*$/,
-      preload: {
-        test: /^0|^main|^style-.*$/,
-        chunks: 'all',
-      },
-    }),
   ];
 
   if (isProd) {
     plugins.push(
       // create css bundle
-      new ExtractTextPlugin('style-[contenthash:8].css'),
+      new ExtractTextPlugin('style-[hash:8].css')
       // minify remove some of the dead code
-      new UglifyJSPlugin({
-        compress: {
-          warnings: false,
-          screw_ie8: true,
-          conditionals: true,
-          unused: true,
-          comparisons: true,
-          sequences: true,
-          dead_code: true,
-          evaluate: true,
-          if_return: true,
-          join_vars: true,
-        },
-      })
     );
 
     cssLoader = ExtractTextPlugin.extract({
@@ -137,8 +98,6 @@ module.exports = function(env) {
         {
           loader: 'css-loader',
           options: {
-            module: true, // css-loader 0.14.5 compatible
-            modules: true,
             importLoaders: 1,
             localIdentName: '[hash:base64:5]',
           },
@@ -177,6 +136,7 @@ module.exports = function(env) {
           loader: 'less-loader',
           options: {
             modifyVars: antThemeVars,
+            javascriptEnabled: true,
           },
         },
       ],
@@ -184,21 +144,7 @@ module.exports = function(env) {
   } else {
     plugins.push(
       // make hot reloading work
-      new webpack.HotModuleReplacementPlugin(),
-      // show module names instead of numbers in webpack stats
-      new webpack.NamedModulesPlugin(),
-      // don't spit out any errors in compiled assets
-      new webpack.NoEmitOnErrorsPlugin(),
-      // load DLL files
-      /* eslint-disable global-require */
-      new webpack.DllReferencePlugin({
-        context: __dirname,
-        manifest: require('./dll/libs-manifest.json'),
-      }),
-      /* eslint-enable global-require */
-
-      // make DLL assets available for the app to download
-      new AddAssetHtmlPlugin([{ filepath: require.resolve('./dll/libs.dll.js') }])
+      new webpack.HotModuleReplacementPlugin()
     );
 
     cssLoader = [
@@ -216,11 +162,19 @@ module.exports = function(env) {
       {
         loader: 'css-loader',
         options: {
-          module: true,
+          modules: true,
           importLoaders: 1,
           localIdentName: '[path][name]-[local]',
         },
       },
+      // {
+      //   loader: 'typings-for-css-modules-loader',
+      //   options: {
+      //     modules: true,
+      //     namedExport: true,
+      //     sass: true,
+      //   },
+      // },
       {
         loader: 'postcss-loader',
         options: {
@@ -258,6 +212,7 @@ module.exports = function(env) {
         loader: 'less-loader',
         options: {
           modifyVars: antThemeVars,
+          javascriptEnabled: true,
         },
       },
     ];
@@ -282,7 +237,7 @@ module.exports = function(env) {
   }
 
   const entryPoint = isProd
-    ? ['babel-polyfill', 'whatwg-fetch', './index.js']
+    ? ['whatwg-fetch', './index.tsx']
     : [
         // activate HMR for React
         'react-hot-loader/patch',
@@ -294,17 +249,19 @@ module.exports = function(env) {
         // bundle the client for hot reloading
         // only- means to only hot reload for successful updates
         'webpack/hot/only-dev-server',
-        // for working js generators
-        'babel-polyfill',
         // fetch polyfill
         'whatwg-fetch',
 
         // the entry point of our app
-        './index.js',
+        './index.tsx',
       ];
 
   return {
     devtool: isProd ? 'cheap-source-map' : 'eval-cheap-module-source-map',
+    mode: nodeEnv,
+    optimization: {
+      namedModules: true,
+    },
     context: sourcePath,
     entry: {
       main: entryPoint,
@@ -319,7 +276,7 @@ module.exports = function(env) {
     module: {
       rules: [
         {
-          test: /\.(html|svg|jpe?g|png|ttf|woff2?)$/,
+          test: /\.(html|ico|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2)(\?.*)?$/,
           include: sourcePath,
           use: {
             loader: 'file-loader',
@@ -327,6 +284,11 @@ module.exports = function(env) {
               name: isProd ? 'static/[name]-[hash:8].[ext]' : 'static/[name].[ext]',
             },
           },
+        },
+        {
+          test: /\.(graphql|gql)$/,
+          exclude: /node_modules/,
+          loader: 'graphql-tag/loader',
         },
         {
           test: /\.scss$/,
@@ -339,31 +301,57 @@ module.exports = function(env) {
           use: lessLoader,
         },
         {
-          test: /\.(js|jsx)$/,
+          test: /\.ts|tsx?$/,
           include: sourcePath,
+          exclude: /node_modules/,
           use: [
             {
-              loader: 'thread-loader',
+              loader: 'ts-loader',
               options: {
-                workerParallelJobs: 20,
+                // transpileOnly: false,
+                getCustomTransformers: () => ({
+                  before: [
+                    tsImportPluginFactory({
+                      libraryName: 'antd',
+                      libraryDirectory: 'lib',
+                      style: true,
+                    }),
+                  ],
+                }),
               },
             },
-            'babel-loader',
           ],
+        },
+        {
+          test: /\.js$/,
+          include: sourcePath,
+          use: ['source-map-loader'],
+          enforce: 'pre',
         },
       ],
     },
     resolve: {
-      extensions: ['.webpack-loader.js', '.web-loader.js', '.loader.js', '.js', '.scss'],
+      extensions: [
+        '.webpack-loader.js',
+        '.web-loader.js',
+        '.loader.js',
+        '.js',
+        '.tsx',
+        '.ts',
+        '.scss',
+      ],
       modules: [path.resolve(__dirname, 'node_modules'), sourcePath],
       symlinks: false,
+      alias: {
+        app: path.resolve(__dirname, 'app/'),
+      },
     },
 
     plugins,
 
     performance: isProd && {
-      maxAssetSize: 400000,
-      maxEntrypointSize: 400000,
+      maxAssetSize: 2000000,
+      maxEntrypointSize: 2000000,
       hints: 'warning',
     },
 

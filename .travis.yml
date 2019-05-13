@@ -1,0 +1,31 @@
+language: node_js
+node_js:
+- '8'
+branches:
+  only:
+  - master
+  - develop
+before_install:
+# - openssl aes-256-cbc -K $encrypted_273f042cf8ec_key -iv $encrypted_273f042cf8ec_iv -in gcloud-cert.json.enc -out gcloud-cert.json -d
+script:
+- echo $TRAVIS_BRANCH
+- yarn test
+- if [ $TRAVIS_BRANCH = 'develop' ]; then CUSTOM_ENV=staging yarn build; fi
+- if [ $TRAVIS_BRANCH = 'master' ]; then CUSTOM_ENV=production yarn build; fi
+deploy:
+- provider: gae
+  keyfile: gcloud-cert.json
+  # project: gothic-depth-196420
+  config: app-production.yaml
+  skip_cleanup: true
+  on:
+    branch: master
+  no_promote: true
+  no_stop_previous_version: true
+- provider: gae
+  keyfile: gcloud-cert.json
+  # project: gothic-depth-196420
+  config: app-staging.yaml
+  skip_cleanup: true
+  on:
+    branch: develop

@@ -1,0 +1,16 @@
+@import 'theme/variables';
+
+.FullPage {
+  &__MainSectionWrap {
+    display: flex;
+    width: calc(100vw - (100vw - 100%));
+  }
+
+  &__MainSection {
+    width: calc(100% - #{$sidebar-width});
+  
+    @media (max-width: $breakpoint-mobile) {
+      width: 100%;
+    }
+  }
+}

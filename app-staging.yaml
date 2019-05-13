@@ -1,0 +1,10 @@
+runtime: nodejs
+env: flex
+# service: investorsportal-staging
+
+env_variables:
+  HOST: '0.0.0.0'
+  CUSTOM_ENV: 'staging'
+
+manual_scaling:
+  instances: 1

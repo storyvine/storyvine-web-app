@@ -1,0 +1,24 @@
+@import 'theme/_variables';
+
+.errorContainer {
+  border: 1px solid $greyLight;
+  padding: 15px 30px;
+  border-radius: 13px;
+  font-size: 12px;
+  max-width: 500px;
+  margin: auto;
+  max-height: 300px;
+  overflow: scroll;
+  margin-top: 20px;
+
+  b {
+    font-size: 20px;
+  }
+}
+
+.errorContainer__production {
+  display: block;
+  text-align: center;
+  width: 100%;
+  padding: 10px;
+}

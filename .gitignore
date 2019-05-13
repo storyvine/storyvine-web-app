@@ -6,8 +6,10 @@ static
 _nogit
 build
 coverage
+yarn.lock
 *.report.dom.html
 /dll
 .idea
 /.cache-loader
 /.vscode
+*.scss.d.ts*

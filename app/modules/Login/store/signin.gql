@@ -1,0 +1,18 @@
+mutation SignIn($input: SigninInput!) {
+  signin(input: $input) {
+    token
+    me {
+      id
+      email
+      roles {
+        name
+      }
+      notificationChecked
+      signinData {
+        qrCode
+        backupCodes
+        signinStep
+      }
+    }
+  }
+}

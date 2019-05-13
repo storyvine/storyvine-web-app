@@ -1,10 +1,23 @@
-// -------- Custom Colors -----------
-$blue-1: #3FA2F7;
-$blue-2: #297FCA;
-$navy-1: #3C5678;
-$green:#06B359;
-$red: #FF5B59;
-$grey: #626A79;
+// ON_STARTUP: change for your color scheme 
+$white: #ffffff;
+$black: #000000;
+$green: #06b359;
+$red: #ff2b2b;
+$greyWhite: #f7f7f7;
+$greyLight: #f2f3f3;
+$greyMiddle: #e3e3e3;
+$grey: #7f7f7f;
+$greyDark: #292c39;
+$greyBlack: #161616;
+$gold: #ffb533;
+$goldDark: #d48700;
+
+$section-border: 1px solid #ddd;
+
+$primary-color-hover: #d8dbe0;
+$dark-color-hover: $greyBlack;
 
 // Layout
-$header-height: 60px;
+$breakpoint-mobile: 576px;
+$breakpoint-tablet: 768px;
+$sidebar-width: 200px;
