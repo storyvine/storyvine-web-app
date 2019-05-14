@@ -31,14 +31,15 @@ interface ParentItem {
 
 const menu: (Item | ParentItem)[] = [
   { link: '/dashboard', title: 'Dashboard', icon: 'area-chart' },
-  {
-    key: 'withSubmenus',
-    title: 'WITH SUBITEMS',
-    children: [
-      { title: 'Subtitle 1', link: '/subpage/first', key: 'first' },
-      { title: 'Subtitle 2', link: `/subpage/second`, key: 'second' },
-    ],
-  },
+  { link: '/xml_templates', title: 'XML Templates', icon: 'area-chart' },
+  // {
+  //   key: 'withSubmenus',
+  //   title: 'WITH SUBITEMS',
+  //   children: [
+  //     { title: 'Subtitle 1', link: '/subpage/first', key: 'first' },
+  //     { title: 'Subtitle 2', link: `/subpage/second`, key: 'second' },
+  //   ],
+  // },
 ];
 
 const Sidebar = (props: Props) => {

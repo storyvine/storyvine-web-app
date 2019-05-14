@@ -4,6 +4,7 @@ import { withErrorBoundary } from 'components/ErrorBoundary';
 import UserDetail from 'routes/UserDetail';
 import Login from 'routes/Login';
 import Dashboard from 'routes/Dashboard';
+import XmlTemplateIndex from 'routes/XmlTemplateIndex';
 import CenterLayout from 'layouts/Centered';
 import FullPageLayout from 'layouts/FullPage';
 
@@ -45,6 +46,7 @@ const Router = () => (
     />
     <Redirect exact from="/users" to="/admin/users" />
     <FullPageLayoutRoute path="/admin/users/:id" Component={UserDetail} />
+    <FullPageLayoutRoute path="/xml_templates" Component={XmlTemplateIndex} />
     <FullPageLayoutRoute Component={() => <div>Not found</div>} />
   </Switch>
 );

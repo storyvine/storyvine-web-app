@@ -33,8 +33,8 @@ const client = new ApolloClient({
   link: ApolloLink.from([
     authLink,
     createUploadLink({
-      uri: `${config.bffUri}/graphql`,
-      credentials: 'include',
+      uri: `${config.bffUri}/graphql`
+      // credentials: 'include',
     }),
   ]),
   cache,
