@@ -1,15 +1,22 @@
 import * as React from 'react';
+import { compose } from 'recompose';
 import { Form, Row, Input, Button } from 'antd';
 import { FormComponentProps } from 'antd/lib/form/Form';
+import { MutationFn } from 'react-apollo';
+import { createXmlTemplateMutation } from './store';
+import { timingSafeEqual } from 'crypto';
 
 const FormItem = Form.Item;
 const TextArea = Input.TextArea;
 
-type Props = FormComponentProps;
-interface State {};
+interface State { message: String };
+interface InnerProps { CreateXmlTemplateMutation: MutationFn; }
+
+type Props = InnerProps & FormComponentProps;
 
 class XmlTemplateNew extends React.Component<Props, State> {
   state = {
+    message: ''
   };
   handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -17,7 +24,16 @@ class XmlTemplateNew extends React.Component<Props, State> {
     this.props.form.validateFields((errors, { name, xml }) => {
       if (errors) return;
 
-      console.log('valid');
+      const { CreateXmlTemplateMutation } = this.props;
+      CreateXmlTemplateMutation({
+        variables: { name: name, xml: xml },
+        update: (_store, { data: { createXmlTemplate }}) => {
+          const message = `XML Template ${createXmlTemplate.name} has been created`;
+          this.setState({ message: message });
+          this.props.form.resetFields();
+        }
+      });
+
     });
   };
   render() {
@@ -30,6 +46,8 @@ class XmlTemplateNew extends React.Component<Props, State> {
         <Row type="flex">
           <h1>XML</h1>
         </Row>
+
+        <p>{this.state.message}</p>
 
         <Form layout={'vertical'} onSubmit={this.handleSubmit}>
           <FormItem label='Name'>
@@ -65,4 +83,6 @@ class XmlTemplateNew extends React.Component<Props, State> {
   };
 };
 
-export default Form.create<Props>()(XmlTemplateNew);
+export default compose<InnerProps, {}>(
+  createXmlTemplateMutation
+)(Form.create<Props>()(XmlTemplateNew));
