@@ -1,7 +1,8 @@
 console.log('process.env', process.env);
 
-// ON_STARTUP: change bffUri for your one
+const apiUrl = process.env.API_URL ? process.env.CUSTOM_ENV : 'http://localhost:3001';
+
 export default {
-  bffUri: process.env.CUSTOM_ENV === 'production' ? 'https://your-production-api' : 'http://localhost:3001',
+  bffUri: apiUrl,
   localhostUri: 'http://localhost:8000',
 };
