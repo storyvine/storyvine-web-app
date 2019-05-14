@@ -15,19 +15,23 @@ const XmlTemplateIndex = ({ xmlTemplatesQuery }:any) => {
     </tr>
   ));
 
-  return(      
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Created At</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        {xmlTemplateRows}
-      </tbody>
-    </table>
+  return(
+    <div>
+      <Link to='/xml_templates/new'>New XML Template</Link>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Created At</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {xmlTemplateRows}
+        </tbody>
+      </table>
+    </div>
   );
 };
 
