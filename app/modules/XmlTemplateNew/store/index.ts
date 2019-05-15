@@ -9,6 +9,7 @@ const createXmlTemplateGql = gql`
       xml
       createdAt
       updatedAt
+      templatesCount
     }
   }
 `;
