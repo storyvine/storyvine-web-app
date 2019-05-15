@@ -4,7 +4,6 @@ import { Form, Row, Input, Button } from 'antd';
 import { FormComponentProps } from 'antd/lib/form/Form';
 import { MutationFn } from 'react-apollo';
 import { createXmlTemplateMutation } from './store';
-import { timingSafeEqual } from 'crypto';
 
 const FormItem = Form.Item;
 const TextArea = Input.TextArea;
