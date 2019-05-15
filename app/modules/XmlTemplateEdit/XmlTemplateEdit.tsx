@@ -2,12 +2,28 @@ import * as React from 'react';
 import { compose } from 'recompose';
 import XmlTemplateForm from 'modules/XmlTemplateForm';
 import { xmlTemplateQuery } from 'store/app';
+import { updateXmlTemplateMutation } from './store';
+import { MutationFn } from 'react-apollo';
+import { getXmlTemplatesGql } from 'store/app';
 
-type Props = { XmlTemplateQuery:any };
+interface State { message: String };
+type Props = { XmlTemplateQuery:any, UpdateXmlTemplateMutation:MutationFn };
 
-class XmlTemplateEdit extends React.Component<Props> {
+class XmlTemplateEdit extends React.Component<Props, State> {
+  state = {
+    message: ''
+  };
   onValidSubmit = (updatedFields:any) => {
     const { name, xml } = updatedFields;
+    const { UpdateXmlTemplateMutation } = this.props;
+
+    UpdateXmlTemplateMutation({
+      variables: { id: 10, name: name, xml: xml },
+      update: (store, { data: { updateXmlTemplate }}) => {
+        const message = `XML Template ${updateXmlTemplate.name} has been updated`;
+        this.setState({ message: message });
+      }
+    });
   };
   render() {
     const { XmlTemplateQuery } = this.props;
@@ -23,5 +39,6 @@ class XmlTemplateEdit extends React.Component<Props> {
 };
 
 export default compose<Props, {}>(
-  xmlTemplateQuery
+  xmlTemplateQuery,
+  updateXmlTemplateMutation
 )(XmlTemplateEdit);
