@@ -6,6 +6,7 @@ import Login from 'routes/Login';
 import Dashboard from 'routes/Dashboard';
 import XmlTemplateIndex from 'routes/XmlTemplateIndex';
 import XmlTemplateNew from 'routes/XmlTemplateNew';
+import XmlTemplateEdit from 'routes/XmlTemplateEdit';
 import CenterLayout from 'layouts/Centered';
 import FullPageLayout from 'layouts/FullPage';
 
@@ -47,6 +48,7 @@ const Router = () => (
     />
     <Redirect exact from="/users" to="/admin/users" />
     <FullPageLayoutRoute path="/admin/users/:id" Component={UserDetail} />
+    <FullPageLayoutRoute path="/xml_templates/:id/edit" Component={XmlTemplateEdit} />
     <FullPageLayoutRoute path="/xml_templates/new" Component={XmlTemplateNew} />
     <FullPageLayoutRoute path="/xml_templates" Component={XmlTemplateIndex} />
     <FullPageLayoutRoute Component={() => <div>Not found</div>} />

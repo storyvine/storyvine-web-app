@@ -13,6 +13,9 @@ const XmlTemplateIndex = ({ xmlTemplatesQuery }:any) => {
       <td>
         <Link to={`/xml_templates/${xmlTemplate.id}`}>Show</Link>
       </td>
+      <td>
+      <Link to={`/xml_templates/${xmlTemplate.id}/edit`}>Edit</Link>
+      </td>
     </tr>
   ));
 
@@ -26,6 +29,7 @@ const XmlTemplateIndex = ({ xmlTemplatesQuery }:any) => {
             <th>Name</th>
             <th>Created At</th>
             <th>Used in</th>
+            <th></th>
             <th></th>
           </tr>
         </thead>
