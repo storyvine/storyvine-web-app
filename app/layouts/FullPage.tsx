@@ -9,7 +9,7 @@ interface Props {
 
 const FullPage = ({ children }: Props) => (
   <div className={s.FullPage__MainSectionWrap}>
-    <Sidebar />
+    {/* <Sidebar /> */}
     <div className={s.FullPage__MainSection}>
       <Header />
       {children}

@@ -39,7 +39,7 @@ const FullPageLayoutRoute = ({ Component, ...props }: LayoutRouteProps) => (
 const Router = () => (
   <Switch>
     <CenterLayoutRoute exact path="/login" Component={Login} />
-    <Redirect exact from="/" to="/dashboard" />
+    <Redirect exact from="/" to="/xml_templates" />
     <FullPageLayoutRoute path="/dashboard" Component={Dashboard} />
     <Route
       exact
