@@ -1,12 +1,18 @@
 import * as React from 'react';
+import { compose } from 'recompose';
 import XmlTemplateForm from 'modules/XmlTemplateForm';
+import { xmlTemplateQuery } from 'store/app';
 
-class XmlTemplateEdit extends React.Component {
+type Props = { XmlTemplateQuery:any };
+
+class XmlTemplateEdit extends React.Component<Props> {
   onValidSubmit = (updatedFields:any) => {
-    console.log('handleFormChange', updatedFields);
+    const { name, xml } = updatedFields;
   };
   render() {
-    const fields = { name: '', xml: '' };
+    const { XmlTemplateQuery } = this.props;
+    const xmlTemplate = XmlTemplateQuery.loading ? {} : XmlTemplateQuery.xmlTemplate;
+    const fields = { name: xmlTemplate.name, xml: xmlTemplate.xml };
 
     return(
       <div>
@@ -16,4 +22,6 @@ class XmlTemplateEdit extends React.Component {
   };
 };
 
-export default XmlTemplateEdit;
+export default compose<Props, {}>(
+  xmlTemplateQuery
+)(XmlTemplateEdit);
