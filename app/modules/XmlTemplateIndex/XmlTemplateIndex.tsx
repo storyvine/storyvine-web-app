@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { xmlTemplatesQuery } from './store/index';
+import { xmlTemplatesQuery } from 'store/app';
 import { Link } from 'react-router-dom';
 
 const XmlTemplateIndex = ({ xmlTemplatesQuery }:any) => {

@@ -4,6 +4,7 @@ import { Form, Row, Input, Button } from 'antd';
 import { FormComponentProps } from 'antd/lib/form/Form';
 import { MutationFn } from 'react-apollo';
 import { createXmlTemplateMutation } from './store';
+import { getXmlTemplatesGql } from 'store/app';
 
 const FormItem = Form.Item;
 const TextArea = Input.TextArea;
@@ -26,10 +27,14 @@ class XmlTemplateNew extends React.Component<Props, State> {
       const { CreateXmlTemplateMutation } = this.props;
       CreateXmlTemplateMutation({
         variables: { name: name, xml: xml },
-        update: (_store, { data: { createXmlTemplate }}) => {
+        update: (store, { data: { createXmlTemplate }}) => {
           const message = `XML Template ${createXmlTemplate.name} has been created`;
           this.setState({ message: message });
           this.props.form.resetFields();
+
+          const xmlTemplatesQuery:any = store.readQuery({ query: getXmlTemplatesGql });
+          const xmlTemplates = xmlTemplatesQuery ? xmlTemplatesQuery.xmlTemplates : [];
+          store.writeQuery({ query: getXmlTemplatesGql, data: { xmlTemplates: [createXmlTemplate, ...xmlTemplates] }});
         }
       });
 

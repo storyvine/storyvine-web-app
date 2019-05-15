@@ -1,7 +1,7 @@
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
-export const getXmlTemplates = gql`
+const getXmlTemplatesGql = gql`
   query {
     xmlTemplates {
       id
@@ -13,6 +13,6 @@ export const getXmlTemplates = gql`
   }
 `;
 
-const xmlTemplatesQuery = graphql(getXmlTemplates, { name: 'xmlTemplatesQuery' });
+const xmlTemplatesQuery = graphql(getXmlTemplatesGql, { name: 'xmlTemplatesQuery' });
 
-export { xmlTemplatesQuery };
+export { xmlTemplatesQuery, getXmlTemplatesGql };
