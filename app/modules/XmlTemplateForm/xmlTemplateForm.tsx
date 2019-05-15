@@ -16,6 +16,7 @@ class XmlTemplateForm extends React.Component<Props> {
       if (errors) return;
 
       this.props.onValidSubmit(updatedFields);
+      this.props.form.resetFields();
     });
   };
   render() {

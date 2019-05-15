@@ -1,49 +1,35 @@
 import * as React from 'react';
 import { compose } from 'recompose';
-import { Form, Row, Input, Button } from 'antd';
-import { FormComponentProps } from 'antd/lib/form/Form';
+import { Row } from 'antd';
 import { MutationFn } from 'react-apollo';
 import { createXmlTemplateMutation } from './store';
 import { getXmlTemplatesGql } from 'store/app';
-
-const FormItem = Form.Item;
-const TextArea = Input.TextArea;
+import XmlTemplateForm from 'modules/XmlTemplateForm';
 
 interface State { message: String };
-interface InnerProps { CreateXmlTemplateMutation: MutationFn; }
-
-type Props = InnerProps & FormComponentProps;
+type Props = { CreateXmlTemplateMutation: MutationFn; }
 
 class XmlTemplateNew extends React.Component<Props, State> {
   state = {
     message: ''
   };
-  handleSubmit = (e: React.SyntheticEvent) => {
-    e.preventDefault();
+  onValidSubmit = (updatedFields:any) => {
+    const { name, xml } = updatedFields;
+    const { CreateXmlTemplateMutation } = this.props;
+    CreateXmlTemplateMutation({
+      variables: { name: name, xml: xml },
+      update: (store, { data: { createXmlTemplate }}) => {
+        const message = `XML Template ${createXmlTemplate.name} has been created`;
+        this.setState({ message: message });
 
-    this.props.form.validateFields((errors, { name, xml }) => {
-      if (errors) return;
-
-      const { CreateXmlTemplateMutation } = this.props;
-      CreateXmlTemplateMutation({
-        variables: { name: name, xml: xml },
-        update: (store, { data: { createXmlTemplate }}) => {
-          const message = `XML Template ${createXmlTemplate.name} has been created`;
-          this.setState({ message: message });
-          this.props.form.resetFields();
-
-          const xmlTemplatesQuery:any = store.readQuery({ query: getXmlTemplatesGql });
-          const xmlTemplates = xmlTemplatesQuery ? xmlTemplatesQuery.xmlTemplates : [];
-          store.writeQuery({ query: getXmlTemplatesGql, data: { xmlTemplates: [createXmlTemplate, ...xmlTemplates] }});
-        }
-      });
-
+        const xmlTemplatesQuery:any = store.readQuery({ query: getXmlTemplatesGql });
+        const xmlTemplates = xmlTemplatesQuery ? xmlTemplatesQuery.xmlTemplates : [];
+        store.writeQuery({ query: getXmlTemplatesGql, data: { xmlTemplates: [createXmlTemplate, ...xmlTemplates] }});
+      }
     });
   };
   render() {
-    const {
-      form: { getFieldDecorator },
-    } = this.props;
+    const fields = { name: '', xml: '' };
 
     return(
        <div>
@@ -53,40 +39,12 @@ class XmlTemplateNew extends React.Component<Props, State> {
 
         <p>{this.state.message}</p>
 
-        <Form layout={'vertical'} onSubmit={this.handleSubmit}>
-          <FormItem label='Name'>
-            { getFieldDecorator('name',
-              { rules: [{ required: true }],
-            })(
-              <Input
-                size='large'
-                placeholder='My super duper XML'
-              />
-            )}
-          </FormItem>
-          <FormItem label="XML">
-            { getFieldDecorator('xml',
-              { rules: [{ required: true }],
-            })(
-              <TextArea
-               rows={20}
-               placeholder='<xml></xml>'
-              />
-            )}
-          </FormItem>
-          <FormItem>
-            <Button
-              type='primary'
-              onClick={this.handleSubmit}>
-              Save
-            </Button>
-          </FormItem>
-        </Form>
+        <XmlTemplateForm fields={fields} onValidSubmit={this.onValidSubmit} />
       </div>
     );
   };
 };
 
-export default compose<InnerProps, {}>(
+export default compose<Props, {}>(
   createXmlTemplateMutation
-)(Form.create<Props>()(XmlTemplateNew));
+)(XmlTemplateNew);
