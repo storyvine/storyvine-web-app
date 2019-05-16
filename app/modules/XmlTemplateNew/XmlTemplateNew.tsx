@@ -3,7 +3,7 @@ import { compose } from 'recompose';
 import { Row } from 'antd';
 import { MutationFn } from 'react-apollo';
 import { createXmlTemplateMutation } from './store';
-import { getXmlTemplatesGql } from 'store/app';
+import { QUERY_XML_TEMPLATES } from 'store/app';
 import XmlTemplateForm from 'modules/XmlTemplateForm';
 
 interface State { message: String };
@@ -22,9 +22,9 @@ class XmlTemplateNew extends React.Component<Props, State> {
         const message = `XML Template ${createXmlTemplate.name} has been created`;
         this.setState({ message: message });
 
-        const xmlTemplatesQuery:any = store.readQuery({ query: getXmlTemplatesGql });
+        const xmlTemplatesQuery:any = store.readQuery({ query: QUERY_XML_TEMPLATES });
         const xmlTemplates = xmlTemplatesQuery ? xmlTemplatesQuery.xmlTemplates : [];
-        store.writeQuery({ query: getXmlTemplatesGql, data: { xmlTemplates: [createXmlTemplate, ...xmlTemplates] }});
+        store.writeQuery({ query: QUERY_XML_TEMPLATES, data: { xmlTemplates: [createXmlTemplate, ...xmlTemplates] }});
       }
     });
   };

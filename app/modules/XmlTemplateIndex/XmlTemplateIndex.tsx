@@ -1,23 +1,31 @@
 import * as React from 'react';
-import { xmlTemplatesQuery } from 'store/app';
+import { QUERY_XML_TEMPLATES } from 'store/app';
 import { Link } from 'react-router-dom';
+import { Query } from 'react-apollo';
 
-const XmlTemplateIndex = ({ xmlTemplatesQuery }:any) => {
+const XmlTemplateIndex = () => {
 
-  const xmlTemplates = xmlTemplatesQuery.loading ? [] : xmlTemplatesQuery.xmlTemplates;
-  const xmlTemplateRows = xmlTemplates.map((xmlTemplate:any) => (
-    <tr key={xmlTemplate.id}>
-      <td>{xmlTemplate.name}</td>
-      <td>{xmlTemplate.createdAt}</td>
-      <td>{xmlTemplate.templatesCount} templates</td>
-      <td>
-        <Link to={`/xml_templates/${xmlTemplate.id}`}>Show</Link>
-      </td>
-      <td>
-      <Link to={`/xml_templates/${xmlTemplate.id}/edit`}>Edit</Link>
-      </td>
-    </tr>
-  ));
+  const xmlTemplateRows = <Query query={QUERY_XML_TEMPLATES}>
+    {
+      ({ data }) => {
+        const xmlTemplates = data.xmlTemplates ? data.xmlTemplates : [];
+
+        return(xmlTemplates.map((xmlTemplate:any) => (
+          <tr key={xmlTemplate.id}>
+            <td>{xmlTemplate.name}</td>
+            <td>{xmlTemplate.createdAt}</td>
+            <td>{xmlTemplate.templatesCount} templates</td>
+            <td>
+              <Link to={`/xml_templates/${xmlTemplate.id}`}>Show</Link>
+            </td>
+            <td>
+            <Link to={`/xml_templates/${xmlTemplate.id}/edit`}>Edit</Link>
+            </td>
+          </tr>
+        )));
+      }
+    }
+  </Query>
 
   return(
     <div>
@@ -41,4 +49,4 @@ const XmlTemplateIndex = ({ xmlTemplatesQuery }:any) => {
   );
 };
 
-export default xmlTemplatesQuery(XmlTemplateIndex);
+export default XmlTemplateIndex;

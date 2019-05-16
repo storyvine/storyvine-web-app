@@ -4,12 +4,12 @@ import { graphql } from 'react-apollo';
 import authUserGql from './authUser.gql';
 import authUserDataGql from './authUserData.gql';
 import authUserDataQuery, { User, AuthUserDataQuery } from './authUserData';
-import { xmlTemplatesQuery, getXmlTemplatesGql } from './getXmlTemplates';
+import { QUERY_XML_TEMPLATES } from './queryXmlTemplates';
 import { QUERY_XML_TEMPLATE } from './queryXmlTemplate';
 
 export * from './authUserData'
 
 const authUserQuery = () => graphql(authUserGql, { name: 'AuthUserQuery' });
 
-export { authUserQuery, authUserDataGql, authUserDataQuery, AuthUserDataQuery, User, xmlTemplatesQuery, getXmlTemplatesGql, QUERY_XML_TEMPLATE };
+export { authUserQuery, authUserDataGql, authUserDataQuery, AuthUserDataQuery, User, QUERY_XML_TEMPLATES, QUERY_XML_TEMPLATE };
 

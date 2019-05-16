@@ -4,10 +4,8 @@ import { compose } from 'recompose';
 import XmlTemplateForm from 'modules/XmlTemplateForm';
 import { updateXmlTemplateMutation } from './store';
 import { MutationFn, Query } from 'react-apollo';
-import { getXmlTemplatesGql } from 'store/app';
+import { QUERY_XML_TEMPLATES } from 'store/app';
 import { QUERY_XML_TEMPLATE } from 'store/app';
-
-import gql from 'graphql-tag';
 
 interface State { message: String };
 type Props = { UpdateXmlTemplateMutation:MutationFn } & RouteComponentProps;
@@ -27,11 +25,11 @@ class XmlTemplateEdit extends React.Component<Props, State> {
         const message = `XML Template ${updateXmlTemplate.name} has been updated`;
         this.setState({ message: message });
 
-        const xmlTemplatesQuery:any = store.readQuery({ query: getXmlTemplatesGql });
+        const xmlTemplatesQuery:any = store.readQuery({ query: QUERY_XML_TEMPLATES });
         const xmlTemplates = xmlTemplatesQuery ? xmlTemplatesQuery.xmlTemplates : [];
         const index = xmlTemplates.findIndex((xmlTemplate:any) => xmlTemplate.id == updateXmlTemplate.id);
         xmlTemplates[index] = updateXmlTemplate;
-        store.writeQuery({ query: getXmlTemplatesGql, data: { xmlTemplates: xmlTemplates }});
+        store.writeQuery({ query: QUERY_XML_TEMPLATES, data: { xmlTemplates: xmlTemplates }});
       }
     });
   };
