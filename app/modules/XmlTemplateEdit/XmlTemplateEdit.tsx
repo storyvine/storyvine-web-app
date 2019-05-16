@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import XmlTemplateForm from 'modules/XmlTemplateForm';
-import { MutationFn, Mutation, Query } from 'react-apollo';
+import { Mutation, Query } from 'react-apollo';
 import { MUTATION_UPDATE_XML_TEMPLATE } from './store';
 import { QUERY_XML_TEMPLATES } from 'store/app';
 import { QUERY_XML_TEMPLATE } from 'store/app';
 
 interface State { message: String };
-type Props = { UpdateXmlTemplateMutation:MutationFn } & RouteComponentProps;
+type Props = RouteComponentProps;
 
 class XmlTemplateEdit extends React.Component<Props, State> {
   state = {

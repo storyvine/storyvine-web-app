@@ -1,32 +1,15 @@
 import * as React from 'react';
-import { compose } from 'recompose';
 import { Row } from 'antd';
-import { MutationFn } from 'react-apollo';
-import { createXmlTemplateMutation } from './store';
+import { Mutation } from 'react-apollo';
+import { MUTATION_CREATE_XML_TEMPLATE } from './store';
 import { QUERY_XML_TEMPLATES } from 'store/app';
 import XmlTemplateForm from 'modules/XmlTemplateForm';
 
 interface State { message: String };
-type Props = { CreateXmlTemplateMutation: MutationFn; }
 
-class XmlTemplateNew extends React.Component<Props, State> {
+class XmlTemplateNew extends React.Component<State> {
   state = {
     message: ''
-  };
-  onValidSubmit = (updatedFields:any) => {
-    const { name, xml } = updatedFields;
-    const { CreateXmlTemplateMutation } = this.props;
-    CreateXmlTemplateMutation({
-      variables: { name: name, xml: xml },
-      update: (store, { data: { createXmlTemplate }}) => {
-        const message = `XML Template ${createXmlTemplate.name} has been created`;
-        this.setState({ message: message });
-
-        const xmlTemplatesQuery:any = store.readQuery({ query: QUERY_XML_TEMPLATES });
-        const xmlTemplates = xmlTemplatesQuery ? xmlTemplatesQuery.xmlTemplates : [];
-        store.writeQuery({ query: QUERY_XML_TEMPLATES, data: { xmlTemplates: [createXmlTemplate, ...xmlTemplates] }});
-      }
-    });
   };
   render() {
     const fields = { name: '', xml: '' };
@@ -39,12 +22,26 @@ class XmlTemplateNew extends React.Component<Props, State> {
 
         <p>{this.state.message}</p>
 
-        <XmlTemplateForm fields={fields} onValidSubmit={this.onValidSubmit} />
+        <Mutation mutation={MUTATION_CREATE_XML_TEMPLATE} update={(store, { data: { createXmlTemplate } }) => {
+          const message = `XML Template ${createXmlTemplate.name} has been created`;
+          this.setState({ message: message });
+
+          const xmlTemplatesQuery:any = store.readQuery({ query: QUERY_XML_TEMPLATES });
+          const xmlTemplates = xmlTemplatesQuery ? xmlTemplatesQuery.xmlTemplates : [];
+          store.writeQuery({ query: QUERY_XML_TEMPLATES, data: { xmlTemplates: [createXmlTemplate, ...xmlTemplates] }});
+        }}>
+          { createXmlTemplate => (
+            <div>
+              <XmlTemplateForm fields={fields} onValidSubmit={(updatedFields:any) => {
+                const { name, xml } = updatedFields;
+                createXmlTemplate({ variables: { name: name, xml: xml } });
+              }} />
+            </div>
+          )}
+        </Mutation>
       </div>
     );
   };
 };
 
-export default compose<Props, {}>(
-  createXmlTemplateMutation
-)(XmlTemplateNew);
+export default XmlTemplateNew;
