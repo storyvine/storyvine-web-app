@@ -49,9 +49,9 @@ const Router = () => (
     />
     <Redirect exact from="/users" to="/admin/users" />
     <FullPageLayoutRoute path="/admin/users/:id" Component={UserDetail} />
-    <FullPageLayoutRoute path="/xml_templates/:id" Component={XmlTemplateShow} />
     <FullPageLayoutRoute path="/xml_templates/:id/edit" Component={XmlTemplateEdit} />
     <FullPageLayoutRoute path="/xml_templates/new" Component={XmlTemplateNew} />
+    <FullPageLayoutRoute path="/xml_templates/:id" Component={XmlTemplateShow} />
     <FullPageLayoutRoute path="/xml_templates" Component={XmlTemplateIndex} />
     <FullPageLayoutRoute Component={() => <div>Not found</div>} />
   </Switch>
