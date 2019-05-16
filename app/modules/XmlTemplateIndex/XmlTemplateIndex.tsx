@@ -2,7 +2,8 @@ import * as React from 'react';
 import { QUERY_XML_TEMPLATES } from 'store/app';
 import { Link } from 'react-router-dom';
 import { Query } from 'react-apollo';
-import { Table, Pagination } from 'antd';
+import { Table, Button } from 'antd';
+import s from './XmlTemplateIndex.scss';
 
 const XmlTemplateIndex = () => {
 
@@ -59,8 +60,10 @@ const XmlTemplateIndex = () => {
   </Query>
 
   return(
-    <div>
-      <Link to='/xml_templates/new'>New XML Template</Link>
+    <div className={s.XmlTemplateIndex}>
+      <Link to='/xml_templates/new'>
+        <Button type='primary'>New XML Template</Button>
+      </Link>
       {table}
     </div>
   );
