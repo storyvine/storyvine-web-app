@@ -1,13 +1,15 @@
 import * as React from 'react';
+import { RouteComponentProps } from 'react-router-dom';
 import { compose } from 'recompose';
 import XmlTemplateForm from 'modules/XmlTemplateForm';
-import { xmlTemplateQuery } from 'store/app';
 import { updateXmlTemplateMutation } from './store';
-import { MutationFn } from 'react-apollo';
+import { MutationFn, Query } from 'react-apollo';
 import { getXmlTemplatesGql } from 'store/app';
 
+import gql from 'graphql-tag';
+
 interface State { message: String };
-type Props = { XmlTemplateQuery:any, UpdateXmlTemplateMutation:MutationFn };
+type Props = { UpdateXmlTemplateMutation:MutationFn } & RouteComponentProps;
 
 class XmlTemplateEdit extends React.Component<Props, State> {
   state = {
@@ -16,9 +18,10 @@ class XmlTemplateEdit extends React.Component<Props, State> {
   onValidSubmit = (updatedFields:any) => {
     const { name, xml } = updatedFields;
     const { UpdateXmlTemplateMutation } = this.props;
+    const { match: { params } }:any = this.props;
 
     UpdateXmlTemplateMutation({
-      variables: { id: 10, name: name, xml: xml },
+      variables: { id: params.id, name: name, xml: xml },
       update: (store, { data: { updateXmlTemplate }}) => {
         const message = `XML Template ${updateXmlTemplate.name} has been updated`;
         this.setState({ message: message });
@@ -32,20 +35,40 @@ class XmlTemplateEdit extends React.Component<Props, State> {
     });
   };
   render() {
-    const { XmlTemplateQuery } = this.props;
-    const xmlTemplate = XmlTemplateQuery.loading ? {} : XmlTemplateQuery.xmlTemplate;
-    const fields = { name: xmlTemplate.name, xml: xmlTemplate.xml };
+    const { match: { params } }:any = this.props;
+
+    const getXmlTemplateGql = gql`
+      query XmlTemplate($id: ID!) {
+        xmlTemplate(id: $id) {
+          id
+          name
+          xml
+        }
+      }
+    `;
 
     return(
-      <div>
-        <p>{this.state.message}</p>
-        <XmlTemplateForm fields={fields} onValidSubmit={this.onValidSubmit} />
-      </div>
+      <Query query={getXmlTemplateGql} variables={{ id: params.id }}>
+        {
+          ({ data, error }) => {
+            if (error) return (<div></div>);
+
+            const xmlTemplate = data.xmlTemplate ? data.xmlTemplate : {};
+            const fields = { name: xmlTemplate.name, xml: xmlTemplate.xml }
+
+            return(
+              <div>
+                <p>{this.state.message}</p>
+                <XmlTemplateForm fields={fields} onValidSubmit={this.onValidSubmit} />
+              </div>
+            );
+          }
+        }
+      </Query>
     );
   };
 };
 
 export default compose<Props, {}>(
-  xmlTemplateQuery,
   updateXmlTemplateMutation
 )(XmlTemplateEdit);

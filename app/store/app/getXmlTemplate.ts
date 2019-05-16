@@ -2,8 +2,8 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 const getXmlTemplateGql = gql`
-  query {
-    xmlTemplate(id: 10) {
+  query XmlTemplate($id: ID) {
+    xmlTemplate(id: $id) {
       id
       name
       xml
