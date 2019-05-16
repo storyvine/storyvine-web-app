@@ -5,6 +5,7 @@ import XmlTemplateForm from 'modules/XmlTemplateForm';
 import { updateXmlTemplateMutation } from './store';
 import { MutationFn, Query } from 'react-apollo';
 import { getXmlTemplatesGql } from 'store/app';
+import { QUERY_XML_TEMPLATE } from 'store/app';
 
 import gql from 'graphql-tag';
 
@@ -37,18 +38,8 @@ class XmlTemplateEdit extends React.Component<Props, State> {
   render() {
     const { match: { params } }:any = this.props;
 
-    const getXmlTemplateGql = gql`
-      query XmlTemplate($id: ID!) {
-        xmlTemplate(id: $id) {
-          id
-          name
-          xml
-        }
-      }
-    `;
-
     return(
-      <Query query={getXmlTemplateGql} variables={{ id: params.id }}>
+      <Query query={QUERY_XML_TEMPLATE} variables={{ id: params.id }}>
         {
           ({ data, error }) => {
             if (error) return (<div></div>);
