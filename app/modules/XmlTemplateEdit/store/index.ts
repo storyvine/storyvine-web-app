@@ -7,6 +7,9 @@ const updateXmlTemplateGql = gql`
       id
       name
       xml
+      createdAt
+      updatedAt
+      templatesCount
     }
   }
 `;

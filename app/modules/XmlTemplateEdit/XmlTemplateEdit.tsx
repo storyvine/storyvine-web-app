@@ -22,6 +22,12 @@ class XmlTemplateEdit extends React.Component<Props, State> {
       update: (store, { data: { updateXmlTemplate }}) => {
         const message = `XML Template ${updateXmlTemplate.name} has been updated`;
         this.setState({ message: message });
+
+        const xmlTemplatesQuery:any = store.readQuery({ query: getXmlTemplatesGql });
+        const xmlTemplates = xmlTemplatesQuery ? xmlTemplatesQuery.xmlTemplates : [];
+        const index = xmlTemplates.findIndex((xmlTemplate:any) => xmlTemplate.id == updateXmlTemplate.id);
+        xmlTemplates[index] = updateXmlTemplate;
+        store.writeQuery({ query: getXmlTemplatesGql, data: { xmlTemplates: xmlTemplates }});
       }
     });
   };
@@ -32,6 +38,7 @@ class XmlTemplateEdit extends React.Component<Props, State> {
 
     return(
       <div>
+        <p>{this.state.message}</p>
         <XmlTemplateForm fields={fields} onValidSubmit={this.onValidSubmit} />
       </div>
     );
