@@ -1,7 +1,6 @@
-import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
-const updateXmlTemplateGql = gql`
+const MUTATION_UPDATE_XML_TEMPLATE = gql`
   mutation UpdateXmlTemplate($id: ID!, $name: String!, $xml: String!) {
     updateXmlTemplate(id: $id, name: $name, xml: $xml) {
       id
@@ -14,6 +13,4 @@ const updateXmlTemplateGql = gql`
   }
 `;
 
-const updateXmlTemplateMutation = graphql(updateXmlTemplateGql, { name: 'UpdateXmlTemplateMutation' });
-
-export { updateXmlTemplateMutation };
+export { MUTATION_UPDATE_XML_TEMPLATE };

@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import { compose } from 'recompose';
 import XmlTemplateForm from 'modules/XmlTemplateForm';
-import { updateXmlTemplateMutation } from './store';
-import { MutationFn, Query } from 'react-apollo';
+import { MutationFn, Mutation, Query } from 'react-apollo';
+import { MUTATION_UPDATE_XML_TEMPLATE } from './store';
 import { QUERY_XML_TEMPLATES } from 'store/app';
 import { QUERY_XML_TEMPLATE } from 'store/app';
 
@@ -13,25 +12,6 @@ type Props = { UpdateXmlTemplateMutation:MutationFn } & RouteComponentProps;
 class XmlTemplateEdit extends React.Component<Props, State> {
   state = {
     message: ''
-  };
-  onValidSubmit = (updatedFields:any) => {
-    const { name, xml } = updatedFields;
-    const { UpdateXmlTemplateMutation } = this.props;
-    const { match: { params } }:any = this.props;
-
-    UpdateXmlTemplateMutation({
-      variables: { id: params.id, name: name, xml: xml },
-      update: (store, { data: { updateXmlTemplate }}) => {
-        const message = `XML Template ${updateXmlTemplate.name} has been updated`;
-        this.setState({ message: message });
-
-        const xmlTemplatesQuery:any = store.readQuery({ query: QUERY_XML_TEMPLATES });
-        const xmlTemplates = xmlTemplatesQuery ? xmlTemplatesQuery.xmlTemplates : [];
-        const index = xmlTemplates.findIndex((xmlTemplate:any) => xmlTemplate.id == updateXmlTemplate.id);
-        xmlTemplates[index] = updateXmlTemplate;
-        store.writeQuery({ query: QUERY_XML_TEMPLATES, data: { xmlTemplates: xmlTemplates }});
-      }
-    });
   };
   render() {
     const { match: { params } }:any = this.props;
@@ -48,7 +28,25 @@ class XmlTemplateEdit extends React.Component<Props, State> {
             return(
               <div>
                 <p>{this.state.message}</p>
-                <XmlTemplateForm fields={fields} onValidSubmit={this.onValidSubmit} />
+                <Mutation mutation={MUTATION_UPDATE_XML_TEMPLATE} update={(store, { data: { updateXmlTemplate } }) => {
+                  const message = `XML Template ${updateXmlTemplate.name} has been updated`;
+                  this.setState({ message: message });
+
+                  const xmlTemplatesQuery:any = store.readQuery({ query: QUERY_XML_TEMPLATES });
+                  const xmlTemplates = xmlTemplatesQuery ? xmlTemplatesQuery.xmlTemplates : [];
+                  const index = xmlTemplates.findIndex((xmlTemplate:any) => xmlTemplate.id == updateXmlTemplate.id);
+                  xmlTemplates[index] = updateXmlTemplate;
+                  store.writeQuery({ query: QUERY_XML_TEMPLATES, data: { xmlTemplates: xmlTemplates }});
+                }}>
+                  { updateXmlTemplate => (
+                    <div>
+                      <XmlTemplateForm fields={fields} onValidSubmit={(updatedFields:any) => {
+                        const { name, xml } = updatedFields;
+                        updateXmlTemplate({ variables: { id: params.id, name: name, xml: xml }});
+                      }} />
+                    </div>
+                  )}
+                </Mutation>
               </div>
             );
           }
@@ -58,6 +56,4 @@ class XmlTemplateEdit extends React.Component<Props, State> {
   };
 };
 
-export default compose<Props, {}>(
-  updateXmlTemplateMutation
-)(XmlTemplateEdit);
+export default XmlTemplateEdit;
