@@ -12,7 +12,7 @@ class XmlTemplateNew extends React.Component<State> {
     message: ''
   };
   render() {
-    const fields = { name: '', xml: '' };
+    const fields = { name: '', xml: '', description: '' };
 
     return(
        <div>
@@ -33,8 +33,8 @@ class XmlTemplateNew extends React.Component<State> {
           { createXmlTemplate => (
             <div>
               <XmlTemplateForm fields={fields} onValidSubmit={(updatedFields:any) => {
-                const { name, xml } = updatedFields;
-                createXmlTemplate({ variables: { name: name, xml: xml } });
+                const { name, xml, description } = updatedFields;
+                createXmlTemplate({ variables: { name: name, xml: xml, description: description } });
               }} />
             </div>
           )}

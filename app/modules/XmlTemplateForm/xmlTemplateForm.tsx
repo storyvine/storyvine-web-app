@@ -22,7 +22,7 @@ class XmlTemplateForm extends React.Component<Props> {
   render() {
     const {
       form: { getFieldDecorator },
-      fields: { name, xml }
+      fields: { name, xml, description }
     } = this.props;
 
     return(
@@ -35,6 +35,16 @@ class XmlTemplateForm extends React.Component<Props> {
               <Input
                 size='large'
                 placeholder='My super duper XML'
+              />
+            )}
+          </FormItem>
+          <FormItem label='Description'>
+            { getFieldDecorator('description',
+              { rules: [{ required: false }], initialValue: description,
+            })(
+              <Input
+                size='large'
+                placeholder='Description'
               />
             )}
           </FormItem>

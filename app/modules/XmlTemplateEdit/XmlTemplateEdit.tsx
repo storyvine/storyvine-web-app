@@ -23,7 +23,7 @@ class XmlTemplateEdit extends React.Component<Props, State> {
             if (error) return (<div></div>);
 
             const xmlTemplate = data.xmlTemplate ? data.xmlTemplate : {};
-            const fields = { name: xmlTemplate.name, xml: xmlTemplate.xml }
+            const fields = { name: xmlTemplate.name, xml: xmlTemplate.xml, description: xmlTemplate.description }
 
             return(
               <div>
@@ -41,8 +41,8 @@ class XmlTemplateEdit extends React.Component<Props, State> {
                   { updateXmlTemplate => (
                     <div>
                       <XmlTemplateForm fields={fields} onValidSubmit={(updatedFields:any) => {
-                        const { name, xml } = updatedFields;
-                        updateXmlTemplate({ variables: { id: params.id, name: name, xml: xml }});
+                        const { name, xml, description } = updatedFields;
+                        updateXmlTemplate({ variables: { id: params.id, name: name, xml: xml, description: description }});
                       }} />
                     </div>
                   )}
