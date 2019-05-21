@@ -10,6 +10,8 @@ const QUERY_XML_TEMPLATES = gql`
       createdAt
       updatedAt
       templatesCount
+      disabledAt
+      deletedAt
     }
   }
 `;
