@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-import { QUERY_XML_TEMPLATE_DETAIL } from 'store/app';
-import { MUTATION_TOGGLE_TEMPLATE_STATE } from './store';
+import { Link, Redirect } from 'react-router-dom';
+import { QUERY_XML_TEMPLATE_DETAIL, QUERY_XML_TEMPLATES } from 'store/app';
+import { MUTATION_TOGGLE_XML_TEMPLATE_STATE, MUTATION_DELETE_XML_TEMPLATE } from './store';
 import { Query, Mutation } from 'react-apollo';
 import { Button } from 'antd';
 
@@ -13,7 +13,7 @@ class XmlTemplateShow extends React.Component<Props> {
     const { match: { params }}:any = this.props;
 
     return(
-      <Query query={QUERY_XML_TEMPLATE_DETAIL} variables={{ id: params.id }}>
+      <Query query={QUERY_XML_TEMPLATE_DETAIL} variables={{ id: params.id }} fetchPolicy={'network-only'}>
         {
           ({ data }) => {
             const xmlTemplate = data.xmlTemplateDetail ? data.xmlTemplateDetail : {};
@@ -27,7 +27,7 @@ class XmlTemplateShow extends React.Component<Props> {
                   <Button type='primary'>Edit XML</Button>
                 </Link>
                 <br />
-                <Mutation mutation={MUTATION_TOGGLE_TEMPLATE_STATE} update={(store, { data: { toggleXmlTemplateState }}) => {
+                <Mutation mutation={MUTATION_TOGGLE_XML_TEMPLATE_STATE} update={(store, { data: { toggleXmlTemplateState }}) => {
                   const xmlTemplateDetailQuery:any = store.readQuery({ query: QUERY_XML_TEMPLATE_DETAIL, variables: { id: xmlTemplate.id } });
                   let xmlTemplateDetail = xmlTemplateDetailQuery.xmlTemplateDetail;
                   xmlTemplateDetail.disabledAt = toggleXmlTemplateState.disabledAt;
@@ -44,6 +44,26 @@ class XmlTemplateShow extends React.Component<Props> {
                     </div>
                   )}
                 </Mutation>
+                <Mutation mutation={MUTATION_DELETE_XML_TEMPLATE} update={(store) => {
+                  const xmlTemplatesQuery:any = store.readQuery({ query: QUERY_XML_TEMPLATES });
+                  const xmlTemplates = xmlTemplatesQuery ? xmlTemplatesQuery.xmlTemplates : [];
+                  const editedXmlTemplates = xmlTemplates.filter((obj:any) => obj.id !== xmlTemplate.id);
+                  store.writeQuery({ query: QUERY_XML_TEMPLATES, data: { xmlTemplates: editedXmlTemplates }});
+                  this.props.history.push('/xml_templates');
+                }}>
+                  {
+                    deleteXmlTemplate => (
+                      <div>
+                        <Link to='#' onClick={() => {
+                          if(confirm('Delete?')) {
+                            deleteXmlTemplate({ variables: { id: xmlTemplate.id }})
+                          }
+                        }}>
+                          <Button type='danger'>Delete XML Template</Button>
+                        </Link>
+                      </div>
+                  )}
+                </Mutation>
                 <p>Templates using the XML:</p>
                 {
                   templates.map((template:any) => {
@@ -54,6 +74,8 @@ class XmlTemplateShow extends React.Component<Props> {
                     );
                   })
                 }
+
+                <p>XML: {xmlTemplate.xml}</p>
               </div>
             );
           }
