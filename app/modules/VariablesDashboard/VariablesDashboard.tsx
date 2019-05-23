@@ -79,7 +79,7 @@ const XmlTemplateIndex = () => {
             key: `cmsVariable${cmsVariable}`,
             label: cmsVariable.label,
             variable_key: cmsVariable.key,
-            inputType: 'text_input'
+            inputType: cmsVariable.inputType
           }
         ));
         return(<Table dataSource={cmsVariablesDataSource} columns={cmsVariablesColumns} pagination={{ pageSize: 25 }} />);
