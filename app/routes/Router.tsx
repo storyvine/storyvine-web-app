@@ -11,6 +11,7 @@ import CenterLayout from 'layouts/Centered';
 import FullPageLayout from 'layouts/FullPage';
 import XmlTemplateShow from './XmlTemplateShow';
 import VariablesDashboard from './VariablesDashboard';
+import CmsVariableNew from './CmsVariableNew';
 
 type LayoutRouteProps = {
   Component: React.ComponentType<any>;
@@ -50,11 +51,14 @@ const Router = () => (
     />
     <Redirect exact from="/users" to="/admin/users" />
     <FullPageLayoutRoute path="/admin/users/:id" Component={UserDetail} />
+
     <FullPageLayoutRoute path="/xml_templates/:id/edit" Component={XmlTemplateEdit} />
     <FullPageLayoutRoute path="/xml_templates/new" Component={XmlTemplateNew} />
     <FullPageLayoutRoute path="/xml_templates/:id" Component={XmlTemplateShow} />
     <FullPageLayoutRoute path="/xml_templates" Component={XmlTemplateIndex} />
+
     <FullPageLayoutRoute path="/variables" Component={VariablesDashboard} />
+    <FullPageLayoutRoute path="/cms_variables/new" Component={CmsVariableNew} />
     <FullPageLayoutRoute Component={() => <div>Not found</div>} />
   </Switch>
 );
