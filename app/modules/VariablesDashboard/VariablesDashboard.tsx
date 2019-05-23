@@ -92,7 +92,7 @@ const XmlTemplateIndex = () => {
       <h1>Variables Dashboard</h1>
       <h2>User generated Variables</h2>
       {globalUserVariablesTable}
-      <h2>User CMS Variables</h2>
+      <h2>CMS Variables</h2>
       {globalCmsVariablesTable}
     </div>
   );
