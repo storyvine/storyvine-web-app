@@ -10,6 +10,7 @@ import XmlTemplateEdit from 'routes/XmlTemplateEdit';
 import CenterLayout from 'layouts/Centered';
 import FullPageLayout from 'layouts/FullPage';
 import XmlTemplateShow from './XmlTemplateShow';
+import VariablesDashboard from './VariablesDashboard';
 
 type LayoutRouteProps = {
   Component: React.ComponentType<any>;
@@ -53,6 +54,7 @@ const Router = () => (
     <FullPageLayoutRoute path="/xml_templates/new" Component={XmlTemplateNew} />
     <FullPageLayoutRoute path="/xml_templates/:id" Component={XmlTemplateShow} />
     <FullPageLayoutRoute path="/xml_templates" Component={XmlTemplateIndex} />
+    <FullPageLayoutRoute path="/variables" Component={VariablesDashboard} />
     <FullPageLayoutRoute Component={() => <div>Not found</div>} />
   </Switch>
 );

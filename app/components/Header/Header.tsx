@@ -76,6 +76,7 @@ const Header = (props: Props) => {
             <Route path="/admin/users" component={Breadcrumbs} />
             <Route path="/notifications" component={Breadcrumbs} />
             <Route path="/xml_templates" component={Breadcrumbs} />
+            <Route path="/variables" component={Breadcrumbs} />
             <Route
               component={useCallback(
                 () => (
