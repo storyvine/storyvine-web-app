@@ -13,15 +13,4 @@ const QUERY_GLOBAL_USER_VARIABLES = gql`
   }
 `;
 
-const QUERY_GLOBAL_CMS_VARIABLES = gql`
-  query GlobalCmsVariables {
-    globalCmsVariables {
-      id
-      key
-      label
-      inputType
-    }
-  }
-`;
-
-export { QUERY_GLOBAL_USER_VARIABLES, QUERY_GLOBAL_CMS_VARIABLES };
+export { QUERY_GLOBAL_USER_VARIABLES };

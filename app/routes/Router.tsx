@@ -57,6 +57,7 @@ const Router = () => (
     <FullPageLayoutRoute path="/xml_templates/:id" Component={XmlTemplateShow} />
     <FullPageLayoutRoute path="/xml_templates" Component={XmlTemplateIndex} />
 
+    <Redirect exact from="/cms_variables" to="/variables" />
     <FullPageLayoutRoute path="/variables" Component={VariablesDashboard} />
     <FullPageLayoutRoute path="/cms_variables/new" Component={CmsVariableNew} />
     <FullPageLayoutRoute Component={() => <div>Not found</div>} />

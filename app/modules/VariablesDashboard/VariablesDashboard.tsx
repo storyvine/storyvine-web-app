@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { Query } from 'react-apollo';
-import { QUERY_GLOBAL_USER_VARIABLES, QUERY_GLOBAL_CMS_VARIABLES } from './store';
-import { Table } from 'antd';
+import { QUERY_GLOBAL_USER_VARIABLES } from './store';
+import { QUERY_GLOBAL_CMS_VARIABLES } from 'store/app';
+import { Table, Button } from 'antd';
+import { Link } from 'react-router-dom';
 
 const XmlTemplateIndex = () => {
   const userVariablesColumns = [
@@ -76,7 +78,7 @@ const XmlTemplateIndex = () => {
         const globalCmsVariables = data.globalCmsVariables ? data.globalCmsVariables : [];
         const cmsVariablesDataSource = globalCmsVariables.map((cmsVariable:any) => (
           {
-            key: `cmsVariable${cmsVariable}`,
+            key: `cmsVariable${cmsVariable.id}`,
             label: cmsVariable.label,
             variable_key: cmsVariable.key,
             inputType: cmsVariable.inputType
@@ -93,6 +95,9 @@ const XmlTemplateIndex = () => {
       <h2>User generated Variables</h2>
       {globalUserVariablesTable}
       <h2>CMS Variables</h2>
+      <Link to='/cms_variables/new'>
+        <Button type='primary'>New CMS Variable</Button>
+      </Link>
       {globalCmsVariablesTable}
     </div>
   );
