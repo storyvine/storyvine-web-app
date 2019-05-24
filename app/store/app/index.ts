@@ -8,10 +8,12 @@ import { QUERY_XML_TEMPLATES } from './queryXmlTemplates';
 import { QUERY_XML_TEMPLATE } from './queryXmlTemplate';
 import { QUERY_XML_TEMPLATE_DETAIL } from './queryXmlTemplateDetail';
 import { QUERY_GLOBAL_CMS_VARIABLES } from './queryGlobalCmsVariables';
+import { QUERY_GLOBAL_CMS_VARIABLE } from './queryGlobalCmsVariable';
 
 export * from './authUserData'
 
 const authUserQuery = () => graphql(authUserGql, { name: 'AuthUserQuery' });
 
-export { authUserQuery, authUserDataGql, authUserDataQuery, AuthUserDataQuery, User, QUERY_XML_TEMPLATES, QUERY_XML_TEMPLATE, QUERY_XML_TEMPLATE_DETAIL, QUERY_GLOBAL_CMS_VARIABLES };
+export { authUserQuery, authUserDataGql, authUserDataQuery, AuthUserDataQuery, User, QUERY_XML_TEMPLATES, QUERY_XML_TEMPLATE,
+  QUERY_XML_TEMPLATE_DETAIL, QUERY_GLOBAL_CMS_VARIABLES, QUERY_GLOBAL_CMS_VARIABLE };
 

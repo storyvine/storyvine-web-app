@@ -49,6 +49,11 @@ const XmlTemplateIndex = () => {
       title: 'Input Type',
       dataIndex: 'inputType',
       key: 'inputType'
+    },
+    {
+      title: 'Actions',
+      dataIndex: 'actions',
+      key: 'actions'
     }
   ];
 
@@ -81,7 +86,8 @@ const XmlTemplateIndex = () => {
             key: `cmsVariable${cmsVariable.id}`,
             label: cmsVariable.label,
             variable_key: cmsVariable.key,
-            inputType: cmsVariable.inputType
+            inputType: cmsVariable.inputType,
+            actions: <Link to={`/cms_variables/${cmsVariable.id}/edit`}>Edit</Link>
           }
         ));
         return(<Table dataSource={cmsVariablesDataSource} columns={cmsVariablesColumns} pagination={{ pageSize: 25 }} />);
