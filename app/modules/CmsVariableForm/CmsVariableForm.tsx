@@ -55,6 +55,7 @@ class CmsVariableForm extends React.Component<Props> {
               <Select>
                 <Option value='text_input'>Text Input</Option>
                 <Option value='file_input'>File Input</Option>
+                <Option value='color_input'>Color Input</Option>
               </Select>
             )}
           </FormItem>
