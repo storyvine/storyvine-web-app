@@ -27,7 +27,7 @@ class XmlTemplateShow extends React.Component<Props> {
               <Row className={s.XmlTemplateShow}>
                 <Col lg={{ span: 24 }}>
                   <h1>{xmlTemplate.name}</h1>
-                  <h2>State: {xmlTemplate.disabledAt ? 'Disabled' : 'Active'}</h2>
+                  <h2>State: {xmlTemplate.state}</h2>
                 </Col>
 
                 <p>Templates using the XML:</p>

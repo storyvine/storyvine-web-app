@@ -7,6 +7,7 @@ const QUERY_XML_TEMPLATES = gql`
       name
       xml
       description
+      state
       createdAt
       updatedAt
       templatesCount

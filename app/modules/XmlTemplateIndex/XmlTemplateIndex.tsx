@@ -19,6 +19,11 @@ const XmlTemplateIndex = () => {
       key: 'description'
     },
     {
+      title: 'State',
+      dataIndex: 'state',
+      key: 'state'
+    },
+    {
       title: 'Updated At',
       dataIndex: 'updatedAt',
       key: 'updatedId'
@@ -49,6 +54,7 @@ const XmlTemplateIndex = () => {
             key: xmlTemplate.id,
             name: <Link to={`/xml_templates/${xmlTemplate.id}`}>{xmlTemplate.name}</Link>,
             description: xmlTemplate.description,
+            state: xmlTemplate.state,
             updatedAt: xmlTemplate.updatedAt,
             createdAt: xmlTemplate.createdAt,
             usedIn: xmlTemplate.templatesCount,
