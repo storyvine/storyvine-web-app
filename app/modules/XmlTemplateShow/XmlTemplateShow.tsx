@@ -1,10 +1,13 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { QUERY_XML_TEMPLATE_DETAIL, QUERY_XML_TEMPLATES } from 'store/app';
 import { MUTATION_TOGGLE_XML_TEMPLATE_STATE, MUTATION_DELETE_XML_TEMPLATE } from './store';
 import { Query, Mutation } from 'react-apollo';
-import { Button } from 'antd';
+import { Button, Row, Col } from 'antd';
+import s from './XmlTemplateShow.scss';
+
+const prettifyXml = require('prettify-xml');
 
 type Props = RouteComponentProps;
 
@@ -18,15 +21,31 @@ class XmlTemplateShow extends React.Component<Props> {
           ({ data }) => {
             const xmlTemplate = data.xmlTemplateDetail ? data.xmlTemplateDetail : {};
             const templates = xmlTemplate.templates ? xmlTemplate.templates : [];
+            const xmlCode = xmlTemplate.xml ? xmlTemplate.xml : '';
 
             return(
-              <div>
-                <h1>Template: {xmlTemplate.name}</h1>
-                <h2>State: {xmlTemplate.disabledAt ? 'Disabled' : 'Active'}</h2>
-                <Link to={`/xml_templates/${xmlTemplate.id}/edit`}>
-                  <Button type='primary'>Edit XML</Button>
-                </Link>
-                <br />
+              <Row className={s.XmlTemplateShow}>
+                <Col lg={{ span: 24 }}>
+                  <h1>{xmlTemplate.name}</h1>
+                  <h2>State: {xmlTemplate.disabledAt ? 'Disabled' : 'Active'}</h2>
+                </Col>
+
+                <p>Templates using the XML:</p>
+                <p>
+                  {
+                    templates.map((template:any) => {
+                      return(
+                        <span key={template.id}>{template.name} ({template.id}), </span>
+                      );
+                    })
+                  }
+                </p>
+
+                <Col lg={{ span: 8 }}>
+                  <Link to={`/xml_templates/${xmlTemplate.id}/edit`}>
+                    <Button type='primary'>Edit XML</Button>
+                  </Link>
+                </Col>
                 <Mutation mutation={MUTATION_TOGGLE_XML_TEMPLATE_STATE} update={(store, { data: { toggleXmlTemplateState }}) => {
                   const xmlTemplateDetailQuery:any = store.readQuery({ query: QUERY_XML_TEMPLATE_DETAIL, variables: { id: xmlTemplate.id } });
                   let xmlTemplateDetail = xmlTemplateDetailQuery.xmlTemplateDetail;
@@ -34,14 +53,14 @@ class XmlTemplateShow extends React.Component<Props> {
                   store.writeQuery({ query: QUERY_XML_TEMPLATE_DETAIL, variables: { id: xmlTemplate.id }, data: { xmlTemplateDetail }});
                 }}>
                   { toggleTemplateState => (
-                    <div>
+                    <Col lg={{ span: 8 }}>
                       <Link to='#' onClick={() => {
                         const toggleState = xmlTemplate.disabledAt ? 'active' : 'disabled' ;
                         toggleTemplateState({ variables: { id: xmlTemplate.id, state: toggleState } });
                       }}>
-                        <Button type='danger'>Toggle XML state</Button>
+                        <Button type='primary'>Toggle XML state</Button>
                       </Link>
-                    </div>
+                    </Col>
                   )}
                 </Mutation>
                 <Mutation mutation={MUTATION_DELETE_XML_TEMPLATE} update={(store) => {
@@ -53,30 +72,22 @@ class XmlTemplateShow extends React.Component<Props> {
                 }}>
                   {
                     deleteXmlTemplate => (
-                      <div>
+                      <Col lg={{ span: 8 }}>
                         <Link to='#' onClick={() => {
                           if(confirm('Delete?')) {
                             deleteXmlTemplate({ variables: { id: xmlTemplate.id }})
                           }
                         }}>
-                          <Button type='danger'>Delete XML Template</Button>
+                          <Button type='primary'>Delete XML Template</Button>
                         </Link>
-                      </div>
+                      </Col>
                   )}
                 </Mutation>
-                <p>Templates using the XML:</p>
-                {
-                  templates.map((template:any) => {
-                    return(
-                      <div key={template.id}>
-                        ID: {template.id}, Name: {template.name}
-                      </div>
-                    );
-                  })
-                }
-
-                <p>XML: {xmlTemplate.xml}</p>
-              </div>
+                <div className={s.xmlCode}>
+                  <h2>XML:</h2>
+                  <pre>{prettifyXml(xmlCode)}</pre>
+                </div>
+              </Row>
             );
           }
         }

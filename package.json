@@ -105,6 +105,7 @@
     "js-cookie": "^2.2.0",
     "lodash": "^4.17.4",
     "moment": "^2.24.0",
+    "prettify-xml": "^1.2.0",
     "pushstate-server": "^3.1.0",
     "raven-js": "^3.24.0",
     "react": "^16.8.1",
