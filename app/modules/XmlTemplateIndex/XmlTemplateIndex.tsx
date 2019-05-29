@@ -3,6 +3,7 @@ import { QUERY_XML_TEMPLATES } from 'store/app';
 import { Link } from 'react-router-dom';
 import { Query } from 'react-apollo';
 import { Table, Button } from 'antd';
+import moment from 'moment';
 import s from './XmlTemplateIndex.scss';
 
 const XmlTemplateIndex = () => {
@@ -55,8 +56,8 @@ const XmlTemplateIndex = () => {
             name: <Link to={`/xml_templates/${xmlTemplate.id}`}>{xmlTemplate.name}</Link>,
             description: xmlTemplate.description,
             state: xmlTemplate.state,
-            updatedAt: xmlTemplate.updatedAt,
-            createdAt: xmlTemplate.createdAt,
+            updatedAt: moment(xmlTemplate.updatedAt).format('LLL'),
+            createdAt: moment(xmlTemplate.createdAt).format('LLL'),
             usedIn: xmlTemplate.templatesCount,
             actions: <Link to={`/xml_templates/${xmlTemplate.id}/edit`}>Edit</Link>
           }

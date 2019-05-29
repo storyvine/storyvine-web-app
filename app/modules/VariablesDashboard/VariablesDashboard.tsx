@@ -4,6 +4,7 @@ import { QUERY_GLOBAL_USER_VARIABLES, MUTATION_DELETE_CMS_VARIABLE } from './sto
 import { QUERY_GLOBAL_CMS_VARIABLES } from 'store/app';
 import { Table, Button } from 'antd';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 
 const XmlTemplateIndex = () => {
   const userVariablesColumns = [
@@ -44,6 +45,11 @@ const XmlTemplateIndex = () => {
       title: 'Key',
       dataIndex: 'variable_key',
       key: 'cmsVariableKey'
+    },
+    {
+      title: 'Updated at',
+      dataIndex: 'updatedAt',
+      key: 'updadedAt'
     },
     {
       title: 'Input Type',
@@ -90,6 +96,7 @@ const XmlTemplateIndex = () => {
           {
             key: `cmsVariable${cmsVariable.id}`,
             label: cmsVariable.label,
+            updatedAt: moment(cmsVariable.updatedAt).format('LLL'),
             variable_key: cmsVariable.key,
             inputType: cmsVariable.inputType,
             edit: <Link to={`/cms_variables/${cmsVariable.id}/edit`}>Edit</Link>,
