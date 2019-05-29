@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Query } from 'react-apollo';
-import { QUERY_GLOBAL_USER_VARIABLES } from './store';
+import { Query, Mutation } from 'react-apollo';
+import { QUERY_GLOBAL_USER_VARIABLES, MUTATION_DELETE_CMS_VARIABLE } from './store';
 import { QUERY_GLOBAL_CMS_VARIABLES } from 'store/app';
 import { Table, Button } from 'antd';
 import { Link } from 'react-router-dom';
@@ -51,9 +51,14 @@ const XmlTemplateIndex = () => {
       key: 'inputType'
     },
     {
-      title: 'Actions',
-      dataIndex: 'actions',
-      key: 'actions'
+      title: 'Edit',
+      dataIndex: 'edit',
+      key: 'edit'
+    },
+    {
+      title: 'Delete',
+      dataIndex: 'delete',
+      key: 'delete'
     }
   ];
 
@@ -87,7 +92,27 @@ const XmlTemplateIndex = () => {
             label: cmsVariable.label,
             variable_key: cmsVariable.key,
             inputType: cmsVariable.inputType,
-            actions: <Link to={`/cms_variables/${cmsVariable.id}/edit`}>Edit</Link>
+            edit: <Link to={`/cms_variables/${cmsVariable.id}/edit`}>Edit</Link>,
+            delete: (
+              <Mutation mutation={MUTATION_DELETE_CMS_VARIABLE} update={(store) => {
+                const cmsVariableQuery:any = store.readQuery({ query: QUERY_GLOBAL_CMS_VARIABLES });
+                const cmsVariables = cmsVariableQuery ? cmsVariableQuery.globalCmsVariables : [];
+                const editedCmsVariable = cmsVariables.filter((obj:any) => obj.id !== cmsVariable.id);
+                store.writeQuery({ query: QUERY_GLOBAL_CMS_VARIABLES, data: { globalCmsVariables: editedCmsVariable }});
+              }}>
+                {
+                  deleteCmsVariable => (
+                    <Link to='#' onClick={() => {
+                      if(confirm('Delete?')) {
+                        deleteCmsVariable({ variables: { id: cmsVariable.id } });
+                      }
+                    }}>
+                      Delete
+                    </Link>
+                  )
+                }
+              </Mutation>
+            )
           }
         ));
         return(<Table dataSource={cmsVariablesDataSource} columns={cmsVariablesColumns} pagination={{ pageSize: 25 }} />);
