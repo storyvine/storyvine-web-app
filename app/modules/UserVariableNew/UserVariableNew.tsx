@@ -13,7 +13,7 @@ class UserVariableNew extends React.Component<State> {
     return(
       <div>
         <p>{this.state.message}</p>
-        <Mutation mutation={MUTATION_CREATE_USER_VARIABLE} update={(store, { data: { createUserVariable }}) => {
+        <Mutation mutation={MUTATION_CREATE_USER_VARIABLE} update={(_, { data: { createUserVariable }}) => {
           const message = `User Generated Variable ${createUserVariable.label} created`;
           this.setState({ message: message });          
         }}>

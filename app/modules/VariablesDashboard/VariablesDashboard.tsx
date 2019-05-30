@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Query, Mutation } from 'react-apollo';
-import { QUERY_GLOBAL_USER_VARIABLES, MUTATION_DELETE_CMS_VARIABLE } from './store';
-import { QUERY_GLOBAL_CMS_VARIABLES } from 'store/app';
+import { MUTATION_DELETE_CMS_VARIABLE } from './store';
+import { QUERY_GLOBAL_CMS_VARIABLES, QUERY_GLOBAL_USER_VARIABLES } from 'store/app';
 import { Table, Button } from 'antd';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
@@ -73,7 +73,7 @@ const XmlTemplateIndex = () => {
     }
   ];
 
-  const globalUserVariablesTable = <Query query={QUERY_GLOBAL_USER_VARIABLES}>
+  const globalUserVariablesTable = <Query query={QUERY_GLOBAL_USER_VARIABLES} fetchPolicy={'network-only'}>
     {
       ({ data }) => {
         const globalUserVariables = data.globalUserVariables ? data.globalUserVariables : [];
