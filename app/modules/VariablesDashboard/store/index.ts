@@ -6,4 +6,10 @@ const MUTATION_DELETE_CMS_VARIABLE = gql`
   }
 `;
 
-export { MUTATION_DELETE_CMS_VARIABLE };
+const MUTATION_DELETE_USER_VARIABLE = gql`
+  mutation DeleteUserVariable($id: ID!) {
+    deleteUserVariable(id: $id)
+  }
+`;
+
+export { MUTATION_DELETE_CMS_VARIABLE, MUTATION_DELETE_USER_VARIABLE };

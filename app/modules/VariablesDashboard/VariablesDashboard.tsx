@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Query, Mutation } from 'react-apollo';
-import { MUTATION_DELETE_CMS_VARIABLE } from './store';
+import { MUTATION_DELETE_CMS_VARIABLE, MUTATION_DELETE_USER_VARIABLE } from './store';
 import { QUERY_GLOBAL_CMS_VARIABLES, QUERY_GLOBAL_USER_VARIABLES } from 'store/app';
 import { Table, Button } from 'antd';
 import { Link } from 'react-router-dom';
@@ -37,6 +37,11 @@ const XmlTemplateIndex = () => {
       title: 'Edit',
       dataIndex: 'userVariableEdit',
       key: 'userVariableEdit'
+    },
+    {
+      title: 'Delete',
+      dataIndex: 'userVariableDelete',
+      key: 'userVariableDelete'
     }
   ];
 
@@ -85,7 +90,27 @@ const XmlTemplateIndex = () => {
             position: userVariable.position,
             screen: userVariable.screen,
             characterLimit: userVariable.characterLimit,
-            userVariableEdit: <Link to={`/user_variables/${userVariable.id}/edit`}>Edit</Link>
+            userVariableEdit: <Link to={`/user_variables/${userVariable.id}/edit`}>Edit</Link>,
+            userVariableDelete: (
+              <Mutation mutation={MUTATION_DELETE_USER_VARIABLE} update={(store) => {
+                const userVariableQuery:any = store.readQuery({ query: QUERY_GLOBAL_USER_VARIABLES });
+                const userVariables = userVariableQuery ? userVariableQuery.globalUserVariables : [];
+                const editedUserVariable = userVariables.filter((obj:any) => obj.id !== userVariable.id);
+                store.writeQuery({ query: QUERY_GLOBAL_USER_VARIABLES, data: { globalUserVariables: editedUserVariable }});
+              }}>
+                {
+                  deleteUserVariable => (
+                    <Link to='#' onClick={() => {
+                      if(confirm('Delete?')) {
+                        deleteUserVariable({ variables: { id: userVariable.id }})
+                      }
+                    }}>
+                      Delete
+                    </Link>
+                  )
+                }
+              </Mutation>
+            )
           }
         ));
 
