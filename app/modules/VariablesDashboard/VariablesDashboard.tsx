@@ -32,6 +32,11 @@ const XmlTemplateIndex = () => {
       title: 'Character Limit',
       dataIndex: 'characterLimit',
       key: 'characterLimit'
+    },
+    {
+      title: 'Edit',
+      dataIndex: 'userVariableEdit',
+      key: 'userVariableEdit'
     }
   ];
 
@@ -79,7 +84,8 @@ const XmlTemplateIndex = () => {
             variable_key: userVariable.key,
             position: userVariable.position,
             screen: userVariable.screen,
-            characterLimit: userVariable.characterLimit
+            characterLimit: userVariable.characterLimit,
+            userVariableEdit: <Link to={`/user_variables/${userVariable.id}/edit`}>Edit</Link>
           }
         ));
 
@@ -131,6 +137,9 @@ const XmlTemplateIndex = () => {
     <div>
       <h1>Variables Dashboard</h1>
       <h2>User generated Variables</h2>
+      <Link to='/user_variables/new'>
+        <Button type='primary'>New User Generated Variable</Button>
+      </Link>
       {globalUserVariablesTable}
       <h2>CMS Variables</h2>
       <Link to='/cms_variables/new'>
