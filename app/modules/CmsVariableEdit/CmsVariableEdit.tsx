@@ -37,7 +37,7 @@ class CmsVariableEdit extends React.Component<Props, State> {
                   {
                     updateCmsVariable => (
                       <CmsVariableForm fields={fields} onValidSubmit={(updatedFields:any) => {
-                        const variables = { id: params.id, ...updatedFields};
+                        const variables = { id: params.id, ...updatedFields };
                         updateCmsVariable({ variables: variables });
                       }} />
                     )
