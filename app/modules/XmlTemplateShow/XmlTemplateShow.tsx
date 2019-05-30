@@ -49,13 +49,15 @@ class XmlTemplateShow extends React.Component<Props> {
                 <Mutation mutation={MUTATION_TOGGLE_XML_TEMPLATE_STATE} update={(store, { data: { toggleXmlTemplateState }}) => {
                   const xmlTemplateDetailQuery:any = store.readQuery({ query: QUERY_XML_TEMPLATE_DETAIL, variables: { id: xmlTemplate.id } });
                   let xmlTemplateDetail = xmlTemplateDetailQuery.xmlTemplateDetail;
-                  xmlTemplateDetail.disabledAt = toggleXmlTemplateState.disabledAt;
+                  xmlTemplateDetail.state = toggleXmlTemplateState.state;
+                  console.log('xmlTemplateDetail.state', xmlTemplateDetail.state);
                   store.writeQuery({ query: QUERY_XML_TEMPLATE_DETAIL, variables: { id: xmlTemplate.id }, data: { xmlTemplateDetail }});
                 }}>
                   { toggleTemplateState => (
                     <Col lg={{ span: 8 }}>
                       <Link to='#' onClick={() => {
-                        const toggleState = xmlTemplate.disabledAt ? 'active' : 'disabled' ;
+                        const toggleState = xmlTemplate.state == 'active' ? 'disabled' : 'active';
+                        console.log('toggleState', toggleState);
                         toggleTemplateState({ variables: { id: xmlTemplate.id, state: toggleState } });
                       }}>
                         <Button type='primary'>Toggle XML state</Button>
