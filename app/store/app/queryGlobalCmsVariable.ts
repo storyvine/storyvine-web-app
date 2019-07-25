@@ -6,6 +6,7 @@ const QUERY_GLOBAL_CMS_VARIABLE = gql`
       id
       label
       key
+      category
       inputType
     }
   }

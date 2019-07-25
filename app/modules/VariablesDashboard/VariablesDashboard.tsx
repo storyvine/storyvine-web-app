@@ -67,6 +67,11 @@ const XmlTemplateIndex = () => {
       key: 'inputType'
     },
     {
+      title: 'Category',
+      dataIndex: 'category',
+      key: 'category'
+    },
+    {
       title: 'Edit',
       dataIndex: 'edit',
       key: 'edit'
@@ -130,6 +135,7 @@ const XmlTemplateIndex = () => {
             updatedAt: moment(cmsVariable.updatedAt).format('LLL'),
             variable_key: cmsVariable.key,
             inputType: cmsVariable.inputType,
+            category: cmsVariable.category,
             edit: <Link to={`/cms_variables/${cmsVariable.id}/edit`}>Edit</Link>,
             delete: (
               <Mutation mutation={MUTATION_DELETE_CMS_VARIABLE} update={(store) => {

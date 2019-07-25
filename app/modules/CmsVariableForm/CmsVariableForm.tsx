@@ -22,7 +22,7 @@ class CmsVariableForm extends React.Component<Props> {
   render() {
     const {
       form: { getFieldDecorator },
-      fields: { label, key, inputType }
+      fields: { label, key, inputType, category }
     } = this.props;
 
     return(
@@ -56,6 +56,17 @@ class CmsVariableForm extends React.Component<Props> {
                 <Option value='text_input'>Text Input</Option>
                 <Option value='file_input'>File Input</Option>
                 <Option value='color_input'>Color Input</Option>
+              </Select>
+            )}
+          </FormItem>
+          <FormItem label='Category'>
+            { getFieldDecorator('category',
+              { rules: [{ required: true }], initialValue: category,
+            })(
+              <Select>
+                <Option value='sub_organization'>Sub Organization</Option>
+                <Option value='organization'>Organization</Option>
+                <Option value='template'>Template</Option>
               </Select>
             )}
           </FormItem>

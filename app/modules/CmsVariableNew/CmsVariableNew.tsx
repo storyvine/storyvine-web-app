@@ -9,7 +9,7 @@ type Props = RouteComponentProps;
 
 class CmsVariableNew extends React.Component<Props> {
   render() {
-    const fields = { label: '', key: '', inputType: '' };
+    const fields = { label: '', key: '', inputType: '', organization: '', category: '' };
 
     return(
       <div>
