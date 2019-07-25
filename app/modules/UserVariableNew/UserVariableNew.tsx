@@ -2,20 +2,18 @@ import * as React from 'react';
 import UserVariableForm from 'modules/UserVariableForm';
 import { MUTATION_CREATE_USER_VARIABLE } from './store';
 import { Mutation } from 'react-apollo';
+import { message } from 'antd';
+import { RouteComponentProps } from 'react-router-dom';
 
-interface State { message:String };
+type Props = RouteComponentProps;
 
-class UserVariableNew extends React.Component<State> {
-  state = {
-    message: ''
-  };
+class UserVariableNew extends React.Component<Props> {
   render() {
     return(
       <div>
-        <p>{this.state.message}</p>
         <Mutation mutation={MUTATION_CREATE_USER_VARIABLE} update={(_, { data: { createUserVariable }}) => {
-          const message = `User Generated Variable ${createUserVariable.label} created`;
-          this.setState({ message: message });          
+          message.success(`User Generated Variable ${createUserVariable.label} created`);
+          this.props.history.push('/xml_templates');
         }}>
           { createCmsTemplate => (
             <div>
