@@ -13,7 +13,7 @@ class UserVariableNew extends React.Component<Props> {
       <div>
         <Mutation mutation={MUTATION_CREATE_USER_VARIABLE} update={(_, { data: { createUserVariable }}) => {
           message.success(`User Generated Variable ${createUserVariable.label} created`);
-          this.props.history.push('/xml_templates');
+          this.props.history.push('/variables');
         }}>
           { createCmsTemplate => (
             <div>

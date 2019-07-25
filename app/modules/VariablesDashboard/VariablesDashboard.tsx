@@ -119,7 +119,7 @@ const XmlTemplateIndex = () => {
     }
   </Query>
 
-  const globalCmsVariablesTable = <Query query={QUERY_GLOBAL_CMS_VARIABLES}>
+  const globalCmsVariablesTable = <Query query={QUERY_GLOBAL_CMS_VARIABLES} fetchPolicy={'network-only'}>
     {
       ({ data }) => {
         const globalCmsVariables = data.globalCmsVariables ? data.globalCmsVariables : [];

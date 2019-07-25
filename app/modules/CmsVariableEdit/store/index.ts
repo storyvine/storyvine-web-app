@@ -7,6 +7,7 @@ const MUTATION_UPDATE_CMS_VARIABLE = gql`
       label
       key
       inputType
+      updatedAt
     }
   }
 `;
