@@ -4,14 +4,11 @@ import { MUTATION_UPDATE_CMS_VARIABLE } from './store';
 import  { Query, Mutation } from 'react-apollo';
 import { RouteComponentProps } from 'react-router-dom';
 import CmsVariableForm from 'modules/CmsVariableForm';
+import { message } from 'antd';
 
 type Props = RouteComponentProps;
-interface State { message:String };
 
-class CmsVariableEdit extends React.Component<Props, State> {
-  state = {
-    message: ''
-  };
+class CmsVariableEdit extends React.Component<Props> {
   render() {
     const { match: { params }}:any = this.props;
 
@@ -23,10 +20,8 @@ class CmsVariableEdit extends React.Component<Props, State> {
 
             return(
               <div>
-                <p>{this.state.message}</p>
                 <Mutation mutation={MUTATION_UPDATE_CMS_VARIABLE} update={(store, { data: { updateCmsVariable }}) => {
-                  const message = `CMS Variable ${updateCmsVariable.label} has been updated`;
-                  this.setState({ message: message });
+                  message.success(`CMS Variable ${updateCmsVariable.label} has been updated`);
 
                   const cmsVariablesQuery:any = store.readQuery({ query: QUERY_GLOBAL_CMS_VARIABLES });
                   const cmsVariables = cmsVariablesQuery ? cmsVariablesQuery.globalCmsVariables : [];
