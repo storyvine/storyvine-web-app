@@ -9,6 +9,7 @@ const MUTATION_CREATE_CMS_VARIABLE = gql`
       category
       inputType
       updatedAt
+      position
     }
   }
 `;

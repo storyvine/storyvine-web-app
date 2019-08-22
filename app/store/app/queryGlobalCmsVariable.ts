@@ -8,6 +8,7 @@ const QUERY_GLOBAL_CMS_VARIABLE = gql`
       key
       category
       inputType
+      position
     }
   }
 `;

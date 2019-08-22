@@ -147,6 +147,10 @@ class XmlTemplateIndex extends React.Component<ApolloIndexProps> {
 
         const firstNode = cmsVariables[fromIndex];
         const secondNode = cmsVariables[toIndex];
+        const firstNodePosition = firstNode.position;
+        const secondNodePosition = secondNode.position;
+        firstNode.position = secondNodePosition;
+        secondNode.position = firstNodePosition;
         cmsVariables[fromIndex] = secondNode;
         cmsVariables[toIndex] = firstNode;
 
