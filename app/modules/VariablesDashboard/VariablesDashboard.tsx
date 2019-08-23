@@ -1,11 +1,10 @@
 import * as React from 'react';
-import { Query, Mutation } from 'react-apollo';
-import { MUTATION_DELETE_CMS_VARIABLE, MUTATION_DELETE_USER_VARIABLE } from './store';
+import { Query, Mutation, WithApolloClient, withApollo } from 'react-apollo';
+import { MUTATION_DELETE_CMS_VARIABLE, MUTATION_DELETE_USER_VARIABLE, MUTATION_UPDATE_CMS_VARIABLES_POSITION } from './store';
 import { QUERY_GLOBAL_CMS_VARIABLES, QUERY_GLOBAL_USER_VARIABLES } from 'store/app';
 import { Table, Button } from 'antd';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
-import { WithApolloClient, withApollo } from 'react-apollo';
 import { compose } from 'recompose';
 import s from './VariablesDashboard.scss';
 
@@ -156,6 +155,9 @@ class XmlTemplateIndex extends React.Component<ApolloIndexProps> {
 
         cache.writeQuery({ query: QUERY_GLOBAL_CMS_VARIABLES, data: { globalCmsVariables: cmsVariables }});
         this.forceUpdate();
+
+        const variables = { firstNodeId: firstNode.id, secondNodeId: secondNode.id, firstNodePosition: secondNodePosition, secondNodePosition: firstNodePosition }
+        this.props.client.mutate({ mutation: MUTATION_UPDATE_CMS_VARIABLES_POSITION, variables: variables });
       },
       handleSelector: 'tr'
     };
