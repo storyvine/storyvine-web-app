@@ -13,6 +13,8 @@ import XmlTemplateShow from './XmlTemplateShow';
 import VariablesDashboard from './VariablesDashboard';
 import CmsVariableNew from './CmsVariableNew';
 import CmsVariableEdit from './CmsVariableEdit';
+import UserVariableEdit from './UserVariableEdit';
+import UserVariableNew from './UserVariableNew';
 
 type LayoutRouteProps = {
   Component: React.ComponentType<any>;
@@ -62,6 +64,11 @@ const Router = () => (
     <FullPageLayoutRoute path="/variables" Component={VariablesDashboard} />
     <FullPageLayoutRoute path="/cms_variables/:id/edit" Component={CmsVariableEdit} />
     <FullPageLayoutRoute path="/cms_variables/new" Component={CmsVariableNew} />
+
+    <Redirect exact from="/user_variables" to="/variables" />
+    <FullPageLayoutRoute path="/user_variables/:id/edit" Component={UserVariableEdit} />
+    <FullPageLayoutRoute path="/user_variables/new" Component={UserVariableNew} />
+
     <FullPageLayoutRoute Component={() => <div>Not found</div>} />
   </Switch>
 );

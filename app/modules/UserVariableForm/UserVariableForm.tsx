@@ -8,7 +8,7 @@ const Option = Select.Option;
 interface InnerProps { fields:any, onValidSubmit:Function }
 type Props = InnerProps & FormComponentProps;
 
-class CmsVariableForm extends React.Component<Props> {
+class UserVariableForm extends React.Component<Props> {
   handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
     
@@ -22,7 +22,7 @@ class CmsVariableForm extends React.Component<Props> {
   render() {
     const {
       form: { getFieldDecorator },
-      fields: { label, key, inputType, category }
+      fields: { label, key, screen, characterLimit, position }
     } = this.props;
 
     return(
@@ -48,25 +48,35 @@ class CmsVariableForm extends React.Component<Props> {
               />
             )}
           </FormItem>
-          <FormItem label='Input Type'>
-            { getFieldDecorator('inputType',
-              { rules: [{ required: true }], initialValue: inputType,
+          <FormItem label='Position'>
+            { getFieldDecorator('position',
+              { rules: [{ required: true }], initialValue: position,
             })(
-              <Select>
-                <Option value='text_input'>Text Input</Option>
-                <Option value='file_input'>File Input</Option>
-                <Option value='color_input'>Color Input</Option>
-              </Select>
+              <Input
+                size='large'
+                placeholder='Position'
+                type='number'
+              />
             )}
           </FormItem>
-          <FormItem label='Category'>
-            { getFieldDecorator('category',
-              { rules: [{ required: true }], initialValue: category,
+          <FormItem label='Character Limit'>
+            { getFieldDecorator('characterLimit',
+              { rules: [{ required: true }], initialValue: characterLimit,
+            })(
+              <Input
+                size='large'
+                placeholder='Character Limit'
+                type='number'
+              />
+            )}
+          </FormItem>
+          <FormItem label='Screen'>
+            { getFieldDecorator('screen',
+              { rules: [{ required: true }], initialValue: screen,
             })(
               <Select>
-                <Option value='sub_organization'>Sub Organization</Option>
-                <Option value='organization'>Organization</Option>
-                <Option value='template'>Template</Option>
+                <Option value='1'>1</Option>
+                <Option value='2'>2</Option>
               </Select>
             )}
           </FormItem>
@@ -83,4 +93,4 @@ class CmsVariableForm extends React.Component<Props> {
   };
 };
 
-export default Form.create<Props>()(CmsVariableForm);;
+export default Form.create<Props>()(UserVariableForm);;

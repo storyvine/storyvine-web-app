@@ -7,6 +7,7 @@ const MUTATION_TOGGLE_XML_TEMPLATE_STATE = gql`
       name
       xml
       description
+      state
       createdAt
       updatedAt
       templatesCount

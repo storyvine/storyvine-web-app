@@ -7,6 +7,7 @@ const QUERY_XML_TEMPLATE = gql`
       name
       xml
       description
+      state
     }
   }
   `;

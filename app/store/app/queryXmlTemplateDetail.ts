@@ -7,6 +7,7 @@ const QUERY_XML_TEMPLATE_DETAIL = gql`
       name
       xml
       description
+      state
       disabledAt
       deletedAt
       templates {
