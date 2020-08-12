@@ -10,6 +10,7 @@ const QUERY_GLOBAL_CMS_VARIABLES = gql`
       inputType
       updatedAt
       position
+      lockableVariableFlag
     }
   }
 `;

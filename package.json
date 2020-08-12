@@ -1,6 +1,7 @@
 {
   "name": "ooo-admin-boilerplate",
   "version": "1.0.0",
+  "engines": { "node": "10.x", "npm": "5.x" },
   "private": true,
   "description": "OOO Admin Boilerplate",
   "license": "MIT",
