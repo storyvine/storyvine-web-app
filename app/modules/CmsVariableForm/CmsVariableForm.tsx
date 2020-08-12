@@ -30,9 +30,9 @@ class CmsVariableForm extends React.Component<Props, State> {
     });
   };
   handlelockableVariableFlag = (e: any) => {
-    this.setState({ lockableVariableFlag: e.target.checked });
+    this.setState({ lockableVariableFlag: !this.state.lockableVariableFlag });
 
-    this.props.form.setFieldsValue({ ['lockableVariableFlag']: e.target.checked });
+    // this.props.form.setFieldsValue({ ['lockableVariableFlag']: e.target.checked });
   };
   render() {
     const {
