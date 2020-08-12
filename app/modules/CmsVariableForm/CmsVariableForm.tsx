@@ -41,8 +41,8 @@ class CmsVariableForm extends React.Component<Props, State> {
     } = this.props;
 
     if (
-      lockableVariableFlag == false ||
-      (lockableVariableFlag == true && this.state.lockableVariableFlag == undefined)
+      (lockableVariableFlag == false || lockableVariableFlag == true) &&
+      this.state.lockableVariableFlag == undefined
     ) {
       this.setState({ lockableVariableFlag: lockableVariableFlag });
     }
