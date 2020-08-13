@@ -82,20 +82,12 @@ class CmsVariableForm extends React.Component<Props, State> {
               </Select>
             )}
           </FormItem>
-          <FormItem
-            key="lockableVariableFlag"
-            label="Lockable variable (available only for Organization category)"
-          >
+          <FormItem label="Lockable variable (available only for Organization category)">
             {getFieldDecorator('lockableVariableFlag', {
               valuePropName: 'checked',
+              initialValue: lockableVariableFlag,
               rules: [{ required: false }],
-            })(
-              <Checkbox
-                value={this.state.lockableVariableFlag}
-                checked={this.state.lockableVariableFlag}
-                onChange={this.handlelockableVariableFlag}
-              ></Checkbox>
-            )}
+            })(<Checkbox />)}
           </FormItem>
           <FormItem>
             <Button type="primary" onClick={this.handleSubmit}>
