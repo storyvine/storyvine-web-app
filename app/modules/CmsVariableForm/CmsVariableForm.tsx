@@ -25,6 +25,8 @@ class CmsVariableForm extends React.Component<Props, State> {
     this.props.form.validateFields((errors, validFields) => {
       if (errors) return;
 
+      validFields.lockableVariableFlag = this.props.form.getFieldValue('lockableVariableFlag');
+
       this.props.onValidSubmit(validFields);
       this.props.form.resetFields();
     });
@@ -85,9 +87,7 @@ class CmsVariableForm extends React.Component<Props, State> {
           <FormItem label="Lockable variable (available only for Organization category)">
             {getFieldDecorator('lockableVariableFlag', {
               valuePropName: 'checked',
-              initialValue: lockableVariableFlag,
-              rules: [{ required: false }],
-            })(<Checkbox />)}
+            })(<Checkbox>Locked</Checkbox>)}
           </FormItem>
           <FormItem>
             <Button type="primary" onClick={this.handleSubmit}>
