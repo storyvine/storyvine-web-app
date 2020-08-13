@@ -33,7 +33,6 @@ class CmsVariableForm extends React.Component<Props, State> {
       }
 
       this.props.onValidSubmit(validFields);
-      this.props.form.resetFields();
     });
   };
   handlelockableVariableFlag = (e: any) => {
