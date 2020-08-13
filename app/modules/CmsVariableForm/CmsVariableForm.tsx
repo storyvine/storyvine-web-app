@@ -26,7 +26,6 @@ class CmsVariableForm extends React.Component<Props, State> {
       if (errors) return;
 
       const lockableVariableFlag = this.props.form.getFieldValue('lockableVariableFlag');
-      console.log('lockableVariableFlag', lockableVariableFlag);
       if (lockableVariableFlag) {
         validFields.lockableVariableFlag = true;
       } else {
@@ -93,6 +92,7 @@ class CmsVariableForm extends React.Component<Props, State> {
           <FormItem label="Lockable variable (available only for Organization category)">
             {getFieldDecorator('lockableVariableFlag', {
               valuePropName: 'checked',
+              initialValue: lockableVariableFlag,
             })(<Checkbox>Locked</Checkbox>)}
           </FormItem>
           <FormItem>
