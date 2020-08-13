@@ -85,7 +85,10 @@ class CmsVariableForm extends React.Component<Props, State> {
             key="lockableVariableFlag"
             label="Lockable variable (available only for Organization category)"
           >
-            {getFieldDecorator('lockableVariableFlag', { rules: [{ required: false }] })(
+            {getFieldDecorator('lockableVariableFlag', {
+              valuePropName: 'checked',
+              rules: [{ required: false }],
+            })(
               <Checkbox
                 value={this.state.lockableVariableFlag}
                 checked={this.state.lockableVariableFlag}
