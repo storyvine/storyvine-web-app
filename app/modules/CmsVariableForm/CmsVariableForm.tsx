@@ -25,7 +25,13 @@ class CmsVariableForm extends React.Component<Props, State> {
     this.props.form.validateFields((errors, validFields) => {
       if (errors) return;
 
-      validFields.lockableVariableFlag = this.props.form.getFieldValue('lockableVariableFlag');
+      const lockableVariableFlag = this.props.form.getFieldValue('lockableVariableFlag');
+      console.log('lockableVariableFlag', lockableVariableFlag);
+      if (lockableVariableFlag) {
+        validFields.lockableVariableFlag = true;
+      } else {
+        validFields.lockableVariableFlag = false;
+      }
 
       this.props.onValidSubmit(validFields);
       this.props.form.resetFields();
