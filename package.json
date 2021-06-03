@@ -96,7 +96,7 @@
     "apollo-link-context": "^1.0.14",
     "apollo-link-http-common": "^0.2.10",
     "apollo-link-state": "^0.4.0",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "cache-loader": "^2.0.1",
     "classnames": "^2.2.5",
     "cookie": "^0.3.1",
